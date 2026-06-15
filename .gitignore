@@ -1,4 +1,6 @@
 verification/
+__pycache__/
+tools/__pycache__/
 *.log
 .DS_Store
 Thumbs.db
