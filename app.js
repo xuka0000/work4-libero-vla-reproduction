@@ -5,9 +5,10 @@ const statusClass = (state) => {
   return "";
 };
 
-const formatRate = (value) => {
-  if (value === null || value === undefined) return "pending";
-  return `${(value * 100).toFixed(0)}%`;
+const formatRate = (row) => {
+  if (row.success_rate === null || row.success_rate === undefined) return "pending";
+  const prefix = row.state.includes("running") ? "partial " : "";
+  return `${prefix}${(row.success_rate * 100).toFixed(0)}%`;
 };
 
 const text = (selector, value) => {
@@ -84,11 +85,13 @@ const render = (data) => {
   rows.innerHTML = "";
   data.reproduction_rows.forEach((row) => {
     const tr = document.createElement("tr");
-    const rate = formatRate(row.success_rate);
-    const success =
-      row.successes === null || row.successes === undefined
-        ? "pending"
-        : `${row.successes}/${row.episodes}`;
+    const rate = formatRate(row);
+    let success = "pending";
+    if (row.state.includes("running") && row.completed !== undefined) {
+      success = `${row.successes}/${row.completed} observed, ${row.episodes} planned`;
+    } else if (row.successes !== null && row.successes !== undefined) {
+      success = `${row.successes}/${row.episodes}`;
+    }
 
     tr.innerHTML = `
       <td><strong>${row.algorithm}</strong></td>
