@@ -1,0 +1,255 @@
+{
+  "workspace": "work4",
+  "title": "LIBERO-10 Public VLA Reproduction Matrix",
+  "subtitle": "Same-protocol public VLA baselines under the work4 control-realizability queue",
+  "authors": [
+    "work4 experiment workspace",
+    "xuka0000"
+  ],
+  "venue": "Evidence page, updated 2026-06-15 12:47 +08",
+  "updated_at": "2026-06-15 12:47 +08",
+  "buttons": [
+    {
+      "label": "Reproduction Table",
+      "href": "#results"
+    },
+    {
+      "label": "Efficiency Video",
+      "href": "#video"
+    },
+    {
+      "label": "Evidence Snapshot",
+      "href": "evidence/public_baseline_queue_status_20260612.md"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/xuka0000/work4-libero-vla-reproduction"
+    }
+  ],
+  "teaser": {
+    "type": "video",
+    "src": "media/work4_libero10_efficiency.mp4",
+    "poster": "media/work4_libero10_efficiency_poster.png",
+    "caption": "Efficiency and reproduction-state animation generated from the work4 experiment log. This is not a rollout recording."
+  },
+  "abstract": [
+    "This page summarizes the current work4 public VLA reproduction branch after the LIBERO Spatial saturation finding. All main rows use the harder LIBERO-10 suite with ten tasks, ten episodes per task, seed 7, and the same local evaluation harness unless marked otherwise.",
+    "The page separates completed main metrics, smoke runs, cache preparation, and running states. Failed pre-health attempts are not reported as algorithm performance. The intent is to make the current comparison boundary visible before using the results in a thesis or paper."
+  ],
+  "method": {
+    "title": "Protocol",
+    "points": [
+      "Benchmark suite: LIBERO-10.",
+      "Comparison unit: ten tasks by ten episodes for each public baseline main row.",
+      "Runtime boundary: same local work4 harness, RTX 5090 sm_120 repair when required, seed 7.",
+      "Reporting rule: only rows with health, rollout, aggregate, and zero error episodes are treated as completed metric rows."
+    ]
+  },
+  "technical_stack": [
+    "LIBERO evaluation harness",
+    "OpenPI and OpenVLA family model servers",
+    "Hugging Face model cache",
+    "RTX 5090 CUDA sm_120 repair route",
+    "PowerShell bridge checkpoint and evidence ledger"
+  ],
+  "result_highlights": [
+    {
+      "label": "Completed LIBERO-10 main rows",
+      "value": "8"
+    },
+    {
+      "label": "Best current main success",
+      "value": "0.26"
+    },
+    {
+      "label": "Best current method",
+      "value": "VLANeXt N260E"
+    },
+    {
+      "label": "Active row",
+      "value": "StarVLA FAST N262D"
+    }
+  ],
+  "reproduction_rows": [
+    {
+      "algorithm": "openpi pi0.5",
+      "run": "N251",
+      "state": "completed main",
+      "suite": "LIBERO-10",
+      "episodes": 100,
+      "successes": 21,
+      "success_rate": 0.21,
+      "errors": 0,
+      "truth_level": "verified aggregate",
+      "source": "/root/shared-nvme/work4/outputs/n251_openpi_pi05_libero10_10task10ep_harder_suite_20260613"
+    },
+    {
+      "algorithm": "OpenVLA-OFT",
+      "run": "N252B",
+      "state": "completed main",
+      "suite": "LIBERO-10",
+      "episodes": 100,
+      "successes": 24,
+      "success_rate": 0.24,
+      "errors": 0,
+      "truth_level": "verified aggregate",
+      "source": "/root/shared-nvme/work4/outputs/n252b_openvla_oft_libero10_prefetch_retry_10task10ep_harder_suite_20260613"
+    },
+    {
+      "algorithm": "openpi pi0 base",
+      "run": "N254W",
+      "state": "completed main",
+      "suite": "LIBERO-10",
+      "episodes": 100,
+      "successes": 1,
+      "success_rate": 0.01,
+      "errors": 0,
+      "truth_level": "verified aggregate",
+      "source": "/root/shared-nvme/work4/outputs/n254w_openpi_pi0_base_libero10_10task10ep_harder_suite_20260613"
+    },
+    {
+      "algorithm": "Isaac GR00T N1.6",
+      "run": "N257",
+      "state": "completed main",
+      "suite": "LIBERO-10",
+      "episodes": 100,
+      "successes": 0,
+      "success_rate": 0.0,
+      "errors": 0,
+      "truth_level": "verified aggregate",
+      "source": "/root/shared-nvme/work4/outputs/n257_groot_n16_sm120_repair_libero10_10task10ep_public_main_20260614"
+    },
+    {
+      "algorithm": "DB-CogACT",
+      "run": "N258D",
+      "state": "completed main",
+      "suite": "LIBERO-10",
+      "episodes": 100,
+      "successes": 13,
+      "success_rate": 0.13,
+      "errors": 0,
+      "truth_level": "verified aggregate",
+      "source": "/root/shared-nvme/work4/outputs/n258d_db_cogact_libero10_uv_cached_10task10ep_public_main_20260615"
+    },
+    {
+      "algorithm": "X-VLA",
+      "run": "N259C",
+      "state": "completed main",
+      "suite": "LIBERO-10",
+      "episodes": 100,
+      "successes": 21,
+      "success_rate": 0.21,
+      "errors": 0,
+      "truth_level": "verified aggregate",
+      "source": "/root/shared-nvme/work4/outputs/n259c_xvla_libero10_pb_hf_timeout_10task10ep_public_main_20260615"
+    },
+    {
+      "algorithm": "VLANeXt",
+      "run": "N260E",
+      "state": "completed main",
+      "suite": "LIBERO-10",
+      "episodes": 100,
+      "successes": 26,
+      "success_rate": 0.26,
+      "errors": 0,
+      "truth_level": "verified aggregate",
+      "source": "/root/shared-nvme/work4/outputs/n260e_vlanext_libero10_local_ckpt_sm120_10task10ep_public_main_20260615"
+    },
+    {
+      "algorithm": "StarVLA Qwen2.5 OFT",
+      "run": "N261E",
+      "state": "completed main",
+      "suite": "LIBERO-10",
+      "episodes": 100,
+      "successes": 4,
+      "success_rate": 0.04,
+      "errors": 0,
+      "truth_level": "verified aggregate",
+      "source": "/root/shared-nvme/work4/outputs/n261e_starvla_qwen25_oft_libero10_cleanld_sm120_cached_10task10ep_public_main_20260615"
+    },
+    {
+      "algorithm": "StarVLA Qwen2.5 FAST",
+      "run": "N262C",
+      "state": "completed smoke",
+      "suite": "LIBERO-10",
+      "episodes": 10,
+      "successes": 0,
+      "success_rate": 0.0,
+      "errors": 0,
+      "truth_level": "verified smoke only",
+      "source": "/root/shared-nvme/work4/outputs/n262c_starvla_qwen25_fast_libero10_cleanld_sm120_cached_10task1ep_public_smoke_20260615"
+    },
+    {
+      "algorithm": "StarVLA Qwen2.5 FAST",
+      "run": "N262D",
+      "state": "running main",
+      "suite": "LIBERO-10",
+      "episodes": 100,
+      "successes": null,
+      "success_rate": null,
+      "errors": null,
+      "truth_level": "running, no aggregate",
+      "source": "/root/shared-nvme/work4/outputs/n262d_starvla_qwen25_fast_libero10_cleanld_sm120_cached_10task10ep_public_main_20260615"
+    }
+  ],
+  "timeline": [
+    {
+      "time": "2026-06-13 06:13 +08",
+      "event": "N251 openpi pi0.5 completed LIBERO-10 at 0.21."
+    },
+    {
+      "time": "2026-06-13",
+      "event": "N252B OpenVLA-OFT completed LIBERO-10 at 0.24."
+    },
+    {
+      "time": "2026-06-14",
+      "event": "N257 Isaac GR00T N1.6 completed the repaired sm_120 main row at 0.00."
+    },
+    {
+      "time": "2026-06-15 05:28 +08",
+      "event": "N258D DB-CogACT completed at 0.13."
+    },
+    {
+      "time": "2026-06-15 06:35 +08",
+      "event": "N259C X-VLA completed at 0.21."
+    },
+    {
+      "time": "2026-06-15 09:27 +08",
+      "event": "N260E VLANeXt completed at 0.26."
+    },
+    {
+      "time": "2026-06-15 11:23 +08",
+      "event": "N261E StarVLA Qwen2.5 OFT completed at 0.04."
+    },
+    {
+      "time": "2026-06-15 12:47 +08",
+      "event": "N262D StarVLA Qwen2.5 FAST was running in server_starting with no aggregate."
+    }
+  ],
+  "boundaries": [
+    "This is a work4 same-harness reproduction page, not an official public leaderboard.",
+    "LIBERO Spatial rows are not the main comparison because the route saturated near 0.98 to 0.99.",
+    "Smoke rows are shown as runability evidence and are not counted as completed main metrics.",
+    "Remote output paths are retained as evidence identifiers. They are not public model artifacts.",
+    "No hardware robot, UAV, or sim-to-real deployment claim is made from these LIBERO rows."
+  ],
+  "next_actions": [
+    "Monitor N262D until service health, rollout, and aggregate are available.",
+    "Add the N262D main metric only if the aggregate has 100 episodes and zero error rows.",
+    "Continue the public candidate table from top to bottom after N262D finishes or blocks."
+  ],
+  "references": [
+    {
+      "label": "Nerfies project page style reference",
+      "url": "https://github.com/nerfies/nerfies.github.io"
+    },
+    {
+      "label": "Academic project page template reference",
+      "url": "https://github.com/eliahuhorwitz/Academic-project-page-template"
+    },
+    {
+      "label": "al-folio academic website style reference",
+      "url": "https://github.com/alshedivat/al-folio"
+    }
+  ]
+}
