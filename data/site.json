@@ -6,8 +6,8 @@
     "work4 experiment workspace",
     "xuka0000"
   ],
-  "venue": "Evidence page, updated 2026-06-15 12:47 +08",
-  "updated_at": "2026-06-15 12:47 +08",
+  "venue": "Evidence page, updated 2026-06-15 13:23 +08",
+  "updated_at": "2026-06-15 13:23 +08",
   "buttons": [
     {
       "label": "Reproduction Table",
@@ -182,13 +182,14 @@
     {
       "algorithm": "StarVLA Qwen2.5 FAST",
       "run": "N262D",
-      "state": "running main",
+      "state": "running main 22/100",
       "suite": "LIBERO-10",
       "episodes": 100,
-      "successes": null,
-      "success_rate": null,
-      "errors": null,
-      "truth_level": "running, no aggregate",
+      "completed": 22,
+      "successes": 0,
+      "success_rate": 0.0,
+      "errors": 0,
+      "truth_level": "running partial, no aggregate",
       "source": "/root/shared-nvme/work4/outputs/n262d_starvla_qwen25_fast_libero10_cleanld_sm120_cached_10task10ep_public_main_20260615"
     }
   ],
@@ -222,8 +223,8 @@
       "event": "N261E StarVLA Qwen2.5 OFT completed at 0.04."
     },
     {
-      "time": "2026-06-15 12:47 +08",
-      "event": "N262D StarVLA Qwen2.5 FAST was running in server_starting with no aggregate."
+      "time": "2026-06-15 13:23 +08",
+      "event": "N262D StarVLA Qwen2.5 FAST was running with health and rollout progress. The partial progress file reported 22/100 completed, 0 successes, 22 fail rows, 0 errors, and no aggregate."
     }
   ],
   "boundaries": [
@@ -234,7 +235,7 @@
     "No hardware robot, UAV, or sim-to-real deployment claim is made from these LIBERO rows."
   ],
   "next_actions": [
-    "Monitor N262D until service health, rollout, and aggregate are available.",
+    "Monitor N262D from the 22/100 partial state until the 100-episode aggregate is available.",
     "Add the N262D main metric only if the aggregate has 100 episodes and zero error rows.",
     "Continue the public candidate table from top to bottom after N262D finishes or blocks."
   ],
