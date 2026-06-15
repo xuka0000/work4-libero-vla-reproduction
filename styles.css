@@ -238,18 +238,25 @@ p {
 
 .filter-panel {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: 14px;
+  grid-template-columns: 1fr;
+  gap: 16px;
   margin-bottom: 24px;
-  padding: 14px;
+  padding: 18px;
   border-radius: 24px;
   background: rgba(232, 232, 237, 0.72);
   backdrop-filter: blur(18px);
 }
 
+.filter-panel > div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
 .filter-panel span {
   display: block;
-  margin: 0 0 8px 2px;
+  margin: 10px 0 0 2px;
   color: var(--muted);
   font-size: 12px;
   font-weight: 700;
@@ -258,13 +265,13 @@ p {
 
 .segmented-control {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
   min-width: 0;
   padding: 4px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.68);
-  overflow-x: auto;
-  scrollbar-width: thin;
+  overflow: visible;
 }
 
 .segmented-control button {
@@ -291,6 +298,44 @@ p {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+}
+
+.algorithm-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 24px;
+}
+
+.algorithm-card {
+  min-width: 0;
+  padding: 16px;
+  border-radius: 22px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+.algorithm-card-top {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.algorithm-card h3 {
+  margin: 0;
+}
+
+.algorithm-card strong {
+  color: var(--blue);
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.algorithm-card p {
+  margin: 8px 0 12px;
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .video-card {
@@ -516,8 +561,17 @@ footer .shell {
     grid-template-columns: 1fr;
   }
 
+  .filter-panel > div {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-panel span {
+    margin-top: 0;
+  }
+
   .highlight-grid,
-  .video-grid {
+  .video-grid,
+  .algorithm-overview {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -575,7 +629,8 @@ footer .shell {
   }
 
   .highlight-grid,
-  .video-grid {
+  .video-grid,
+  .algorithm-overview {
     grid-template-columns: 1fr;
   }
 

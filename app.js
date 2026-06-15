@@ -94,6 +94,45 @@ const renderHighlights = (items) => {
   });
 };
 
+const renderAlgorithmOverview = () => {
+  const node = clear("#algorithm-overview");
+  const videoFamilies = new Set(flattenRollouts(siteData).map((rollout) => rollout.algorithm));
+  siteData.performance_comparison.forEach((row) => {
+    const card = document.createElement("article");
+    card.className = "algorithm-card";
+
+    const top = document.createElement("div");
+    top.className = "algorithm-card-top";
+
+    const title = document.createElement("h3");
+    title.textContent = row.family;
+
+    const rate = document.createElement("strong");
+    rate.textContent = formatRate(row.success_rate);
+
+    top.append(title, rate);
+
+    const label = document.createElement("p");
+    label.textContent = row.algorithm;
+
+    const meta = document.createElement("div");
+    meta.className = "card-row";
+
+    const videoState = document.createElement("span");
+    const hasVideo = videoFamilies.has(row.family);
+    videoState.className = `status-pill ${hasVideo ? "video-failure" : "metric-only"}`;
+    videoState.textContent = hasVideo ? "video + metric" : "metric only";
+
+    const protocol = document.createElement("span");
+    protocol.className = "muted";
+    protocol.textContent = `${row.successes}/${row.episodes}`;
+
+    meta.append(videoState, protocol);
+    card.append(top, label, meta);
+    node.appendChild(card);
+  });
+};
+
 const flattenRollouts = (data) =>
   data.visual_task_groups.flatMap((group) =>
     group.rollouts.map((rollout) => ({
@@ -411,6 +450,7 @@ const render = (data) => {
 
   renderParagraphs("#abstract-text", data.abstract);
   renderHighlights(data.visual_highlights);
+  renderAlgorithmOverview();
   rerenderFilters();
   renderGallery();
   renderCoverageMatrix();
