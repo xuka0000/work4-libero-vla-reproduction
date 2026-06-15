@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LIBERO-10 Public VLA Reproduction Matrix</title>
+    <meta
+      name="description"
+      content="Same-protocol LIBERO-10 public VLA reproduction evidence page for work4."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="paper-shell">
+        <p class="eyebrow" id="venue">Evidence page</p>
+        <h1 id="title">LIBERO-10 Public VLA Reproduction Matrix</h1>
+        <p class="subtitle" id="subtitle"></p>
+        <p class="authors" id="authors"></p>
+        <nav class="button-row" id="buttons" aria-label="Project links"></nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="teaser paper-shell" id="video">
+        <figure>
+          <video
+            id="teaser-video"
+            controls
+            muted
+            playsinline
+            preload="metadata"
+          ></video>
+          <figcaption id="teaser-caption"></figcaption>
+        </figure>
+      </section>
+
+      <section class="paper-shell narrow" id="abstract">
+        <h2>Abstract</h2>
+        <div id="abstract-text"></div>
+      </section>
+
+      <section class="paper-shell split">
+        <article>
+          <h2 id="method-title">Protocol</h2>
+          <ul class="check-list" id="method-points"></ul>
+        </article>
+        <aside class="stack-panel">
+          <h2>Technical Stack</h2>
+          <div class="tag-list" id="technical-stack"></div>
+        </aside>
+      </section>
+
+      <section class="paper-shell" id="results">
+        <h2>Reproduction Status</h2>
+        <div class="highlight-grid" id="highlights"></div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Algorithm</th>
+                <th>Run</th>
+                <th>Status</th>
+                <th>Success</th>
+                <th>Episodes</th>
+                <th>Truth Level</th>
+              </tr>
+            </thead>
+            <tbody id="result-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="paper-shell">
+        <h2>Experiment Timeline</h2>
+        <ol class="timeline" id="timeline"></ol>
+      </section>
+
+      <section class="paper-shell split">
+        <article>
+          <h2>Evidence Boundaries</h2>
+          <ul class="check-list" id="boundaries"></ul>
+        </article>
+        <article>
+          <h2>Next Actions</h2>
+          <ul class="check-list" id="next-actions"></ul>
+        </article>
+      </section>
+
+      <section class="paper-shell">
+        <h2>References</h2>
+        <ul class="references" id="references"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <div class="paper-shell">
+        <span id="updated-at"></span>
+        <span>Generated from work4 evidence files.</span>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
