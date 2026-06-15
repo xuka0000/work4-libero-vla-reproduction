@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LIBERO-10 Public VLA Reproduction Matrix</title>
+    <title>LIBERO Robotic Arm Control Visual Evidence</title>
     <meta
       name="description"
-      content="Same-protocol LIBERO-10 public VLA reproduction evidence page for work4."
+      content="Real LIBERO robotic arm control rollout videos from the work4 OpenVLA-OFT visual capture run."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -18,26 +18,31 @@
         <p class="subtitle" id="subtitle"></p>
         <p class="authors" id="authors"></p>
         <nav class="button-row" id="buttons" aria-label="Project links"></nav>
-      </div>
-    </header>
-
-    <main>
-      <section class="teaser paper-shell" id="video">
-        <figure>
+        <figure class="hero-teaser">
           <video
             id="teaser-video"
             controls
+            autoplay
             muted
+            loop
             playsinline
             preload="metadata"
           ></video>
           <figcaption id="teaser-caption"></figcaption>
         </figure>
-      </section>
+      </div>
+    </header>
 
+    <main>
       <section class="paper-shell narrow" id="abstract">
         <h2>Abstract</h2>
         <div id="abstract-text"></div>
+      </section>
+
+      <section class="paper-shell" id="rollouts">
+        <h2>Visual Rollouts</h2>
+        <div class="highlight-grid" id="highlights"></div>
+        <div class="video-grid" id="rollout-gallery"></div>
       </section>
 
       <section class="paper-shell split">
@@ -51,24 +56,9 @@
         </aside>
       </section>
 
-      <section class="paper-shell" id="results">
-        <h2>Reproduction Status</h2>
-        <div class="highlight-grid" id="highlights"></div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Algorithm</th>
-                <th>Run</th>
-                <th>Status</th>
-                <th>Success</th>
-                <th>Episodes</th>
-                <th>Truth Level</th>
-              </tr>
-            </thead>
-            <tbody id="result-rows"></tbody>
-          </table>
-        </div>
+      <section class="paper-shell" id="evidence">
+        <h2>Evidence Files</h2>
+        <ul class="references" id="evidence-files"></ul>
       </section>
 
       <section class="paper-shell">
@@ -76,7 +66,7 @@
         <ol class="timeline" id="timeline"></ol>
       </section>
 
-      <section class="paper-shell split">
+      <section class="paper-shell split" id="boundaries-section">
         <article>
           <h2>Evidence Boundaries</h2>
           <ul class="check-list" id="boundaries"></ul>

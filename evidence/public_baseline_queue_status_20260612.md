@@ -1,6 +1,6 @@
 # Public Baseline Queue Status
 
-Truth level: `public_baseline_queue_status_libero10_n260e_vlanext_main_running_no_metric`
+Truth level: `public_baseline_queue_status_libero10_n263b_visual_capture_no_metric`
 
 ## Current Active Algorithm
 
@@ -627,10 +627,20 @@ N262C was launched as the clean-GL FAST smoke retry. It reached health,
 completed the LIBERO-10 10-task by one-episode smoke at 2026-06-15 12:10 +08,
 and wrote an aggregate with mean_success 0.0 over 10 episodes, 0/10 successes,
 10 normal fail rows, and 0 error rows. N262D was then launched as the full
-LIBERO-10 10-task by 10-episode main row. At 2026-06-15 13:23 +08, N262D was
-`RUNNING` with service health and rollout progress. The progress file reported
-22/100 completed episodes, the sqlite table contained 22 `fail` rows, 0 errors,
-and no aggregate existed yet.
+LIBERO-10 10-task by 10-episode main row. At 2026-06-15 15:13 +08, N262D was
+`DONE` with status `passed`, reason `harness_public_baseline_completed`,
+health ready `true`, episode started `true`, run return code 0, and one
+100-episode aggregate. The final result was mean_success 0.02, with 2 success
+rows, 98 normal fail rows, and 0 errors.
+
+After the user corrected the project-page direction, N263 was launched as an
+OpenVLA-OFT visual-capture job for the LIBERO-10 robotic-arm scene. N263 first
+failed before rollout because the harness video recorder used a Python 3.8
+incompatible runtime type alias. N263B added a compatibility patch and import
+check for `vla_eval.benchmarks.video`, then completed two task-0 rollout
+episodes at 2026-06-15 15:24 +08. It exported two real MP4 videos, each with
+221 frames at 20 FPS. This is visual evidence for the project page, not a
+main metric row.
 
 Failure-triage note:
 
@@ -672,7 +682,8 @@ from reducing many pre-health failures to a generic `FAILED` state before pi0.
 | StarVLA Qwen2.5 FAST N262A `libero_10` smoke | failed before health | FAST weights were not cached; no rollout, no aggregate, and no metric row |
 | StarVLA Qwen2.5 FAST N262B weight prefetch | completed cache repair | `StarVLA/Qwen2.5-VL-FAST-LIBERO-4in1` snapshot_download completed at 2026-06-15 11:44 +08; cache size 7.6 GiB with 8.146 GB checkpoint |
 | StarVLA Qwen2.5 FAST N262C `libero_10` smoke retry | completed valid smoke | Reached health and completed 10 LIBERO-10 one-episode tasks with mean_success 0.0, 0/10 successes, 10 normal FAIL rows, and 0 error rows |
-| StarVLA Qwen2.5 FAST N262D `libero_10` main | running main row | Launched after valid smoke; latest 2026-06-15 13:23 +08 progress is 22/100 completed, 22 fail rows, 0 errors, and no aggregate yet |
+| StarVLA Qwen2.5 FAST N262D `libero_10` main | completed main row | Launched after valid smoke; final mean_success 0.02, 2/100 successes, 98 normal FAIL rows, 0 errors, and a valid 100-episode aggregate |
+| OpenVLA-OFT N263B visual capture | completed visual evidence | Two LIBERO-10 task-0 MP4 rollouts exported after the video-recorder compatibility patch; visual page evidence only, not a main metric row |
 | MME-VLA pi0.5 baseline | failed before service health | Network git dependency fetch failed for pinned `RoboMME/robomme_policy_learning.git`, not an evaluation result |
 | MME-VLA pi0.5 N244B git-proxy ssh-rewrite retry | failed before service health | Git proxy fixed the earlier fetch blocker, but startup then failed on the same `cv2` and `libGL.so.1` runtime conflict seen in StarVLA, not an evaluation result |
 | CogACT Base | failed before service health | Network git dependency fetch failed for pinned `arnoldland/openvla`, not an evaluation result |
@@ -709,7 +720,8 @@ a four-hour health window for repaired public-smoke attempts.
 | 2 | N262A StarVLA Qwen2.5 FAST LIBERO-10 10task1ep smoke failed before health because FAST weights were not cached. It has no metric. |
 | 3 | N262B StarVLA Qwen2.5 FAST weight prefetch completed at 2026-06-15 11:44 +08. |
 | 4 | N262C StarVLA Qwen2.5 FAST LIBERO-10 10task1ep smoke retry completed at 2026-06-15 12:10 +08 with mean_success 0.0, 0/10 successes, 10 normal fail rows, and 0 errors. |
-| 5 | N262D StarVLA Qwen2.5 FAST LIBERO-10 10task10ep main is running rollout. Latest 13:23 +08 progress is 22/100 completed, 22 fail rows, 0 errors, and no aggregate yet. |
+| 5 | N262D StarVLA Qwen2.5 FAST LIBERO-10 10task10ep main completed at 2026-06-15 15:13 +08 with mean_success 0.02, 2/100 successes, 98 normal fail rows, and 0 errors. |
+| 6 | N263B OpenVLA-OFT visual capture completed at 2026-06-15 15:24 +08 and exported two real LIBERO-10 MP4 rollout videos for the project homepage. |
 
 The N241 public-smoke queue has no remaining waiting job. N244B was a new
 single-candidate repair retry, not a relaunch of the full public queue.
@@ -742,7 +754,7 @@ protocol. The active route has pivoted to `libero_10`.
 
 ## Current True Progress Table
 
-Latest probe time: 2026-06-15 13:23 +08:00
+Latest probe time: 2026-06-15 15:25 +08:00
 
 Use this table for human-facing recovery status instead of only reporting
 aggregate counts.
@@ -762,7 +774,8 @@ aggregate counts.
 | StarVLA Qwen2.5 FAST N262A | Failed before health because FAST weights were not cached. No metric row. |
 | StarVLA Qwen2.5 FAST N262B | FAST weight prefetch completed at 11:44 +08; cache now has the 8.146 GB checkpoint. |
 | StarVLA Qwen2.5 FAST N262C | LIBERO-10 smoke completed. Final mean_success 0.0, 0/10 successes, 10 normal FAIL rows, 0 error rows. |
-| StarVLA Qwen2.5 FAST N262D | LIBERO-10 main is running. Latest 13:23 +08 progress is 22/100 completed, 22 fail rows, 0 errors, and no aggregate yet. |
+| StarVLA Qwen2.5 FAST N262D | LIBERO-10 main completed. Final mean_success 0.02, 2/100 successes, 98 normal FAIL rows, 0 errors. |
+| OpenVLA-OFT N263B visual capture | Completed two real LIBERO-10 MP4 rollout videos for the project homepage. This is visual evidence only, not a metric row. |
 
 N253 has frozen the two-row LIBERO-10 VLA sanity table and task-level matrix in
 `benchmark_swarm_rl/docs/n253_libero10_vla_sanity_gate_20260613.md`. The VLA
@@ -782,7 +795,7 @@ branch, but it should not be used as UAV/UGV deployment evidence.
 | PUB07 | X-VLA LIBERO | 2025 | completed `libero_10` row after repair | N236C failed before health during dependency or model-asset cold start; N259 identified missing `protobuf` in the X-VLA service dependency block; N259B completed the 10-task by one-episode repair smoke with mean_success 0.20; N259C completed the full LIBERO-10 10-task by 10-episode row with mean_success 0.21, 21/100 successes, and no error episodes |
 | PUB08 | VLANeXt LIBERO | 2025 | completed `libero_10` row after weight-cache and CUDA repair | N236B failed before health while uv dependencies were still downloading; N260 passed dependencies and source clone but failed before health because weights were not cached; N260B cached `VLANeXt_libero_10.pt`; N260C repaired torch to cu128 with CUDA available; N260D completed the 10-task by one-episode smoke with mean_success 0.30 and 0 errors; N260E completed the 10-task by 10-episode main row with mean_success 0.26, 26/100 successes, and 0 errors |
 | PUB09 | StarVLA Qwen2.5 OFT LIBERO | 2026 | completed `libero_10` row after clean-GL and sm120 repair | Earlier cached retry and queue-end retry failed before health on the `cv2` and `libGL` conflict; N261A separated the model server GL environment and repaired torch to cu128; N261C2 cached the StarVLA and Qwen base weights; N261D completed the 10-task by one-episode smoke with mean_success 0.0 and 0 errors; N261E completed the full 10-task by 10-episode main row with mean_success 0.04, 4/100 successes, and 0 errors |
-| PUB10 | StarVLA Qwen2.5 FAST LIBERO | 2026 | running `libero_10` main after cache repair and smoke | Earlier attempt failed before health on the same `cv2` and `libGL` conflict; N262A then failed before health because FAST weights were not cached; N262B cached FAST weights; N262C completed the 10-task by one-episode smoke with mean_success 0.0 and 0 errors; N262D is running the full 10-task by 10-episode main row, with 22/100 completed and no aggregate at the latest probe |
+| PUB10 | StarVLA Qwen2.5 FAST LIBERO | 2026 | completed `libero_10` main after cache repair and smoke | Earlier attempt failed before health on the same `cv2` and `libGL` conflict; N262A then failed before health because FAST weights were not cached; N262B cached FAST weights; N262C completed the 10-task by one-episode smoke with mean_success 0.0 and 0 errors; N262D completed the full 10-task by 10-episode main row with mean_success 0.02, 2/100 successes, and no error episodes |
 | PUB11 | StarVLA Qwen2.5 GR00T LIBERO | 2026 | no metric | failed before health on the same cv2 and libGL conflict |
 | PUB12 | StarVLA Qwen3 OFT LIBERO | 2026 | no metric | failed before health on the same cv2 and libGL conflict |
 | PUB13 | StarVLA Qwen3 PI LIBERO | 2026 | no metric | failed before health on the same cv2 and libGL conflict |

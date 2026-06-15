@@ -1,0 +1,139 @@
+{
+  "benchmark": "LIBEROBenchmark_LIBEROBenchmark_libero_10_openvla_oft_visual_capture_1task2ep_visual_capture",
+  "mode": "sync",
+  "harness_version": "0.1.dev1+g948f31907.d20260615",
+  "created_at": "2026-06-15T07:24:57.145442+00:00",
+  "tasks": [
+    {
+      "task": "put both the alphabet soup and the tomato sauce in the basket",
+      "episodes": [
+        {
+          "sid": "3b68899a-4bb2-4a19-bcc1-677472effc2f",
+          "eid": "dab06873-f3c0-4203-bb86-600565498066",
+          "episode_id": 0,
+          "metrics": {
+            "success": false
+          },
+          "steps": 220,
+          "elapsed_sec": 27.173,
+          "name": "put both the alphabet soup and the tomato sauce in the basket",
+          "suite": "libero_10",
+          "task_id": 0,
+          "episode_idx": 0
+        },
+        {
+          "sid": "3b68899a-4bb2-4a19-bcc1-677472effc2f",
+          "eid": "bef0db3b-fb2f-41b5-98f0-c4d796932752",
+          "episode_id": 1,
+          "metrics": {
+            "success": false
+          },
+          "steps": 220,
+          "elapsed_sec": 19.275,
+          "name": "put both the alphabet soup and the tomato sauce in the basket",
+          "suite": "libero_10",
+          "task_id": 0,
+          "episode_idx": 1
+        }
+      ],
+      "num_episodes": 2,
+      "avg_steps": 220.0,
+      "mean_success": 0.0
+    }
+  ],
+  "config": {
+    "benchmark": "vla_eval.benchmarks.libero.benchmark:LIBEROBenchmark",
+    "mode": "sync",
+    "name": "LIBEROBenchmark",
+    "subname": "LIBEROBenchmark_libero_10_openvla_oft_visual_capture_1task2ep_visual_capture",
+    "episodes_per_task": 2,
+    "max_steps": 220,
+    "max_tasks": 1,
+    "tasks": null,
+    "params": {
+      "suite": "libero_10",
+      "seed": 7,
+      "num_steps_wait": 10
+    },
+    "recording": {
+      "output_dir": "/root/shared-nvme/work4/outputs/n263b_openvla_oft_libero10_visual_capture_videopatch_20260615/results/episodes",
+      "record_video": true,
+      "record_step": true
+    },
+    "hz": 10.0,
+    "hold_policy": "repeat_last",
+    "throughput_mode": false,
+    "paced": true,
+    "wait_first_action": false
+  },
+  "eval_id": "n263b_openvla_oft_libero10_visual_capture_videopatch_20260615-LIBEROBenchmark_LIBEROBenchmark_libero_10_openvla_oft_visual_capture_1task2ep_visual_capture",
+  "server_info": {
+    "harness_version": "0.1.dev1+g948f31907.d20260615",
+    "protocol_version": 1,
+    "model_server": "OFTModelServer",
+    "capabilities": {},
+    "observation_params": {
+      "env_seed": 0,
+      "quat_no_antipodal": true,
+      "send_wrist_image": true,
+      "send_state": true
+    },
+    "action_spec": {
+      "position": {
+        "name": "position",
+        "dims": 3,
+        "format": "delta_xyz",
+        "range": [
+          -1,
+          1
+        ]
+      },
+      "rotation": {
+        "name": "rotation",
+        "dims": 3,
+        "format": "axis_angle",
+        "range": [
+          -3.15,
+          3.15
+        ]
+      },
+      "gripper": {
+        "name": "gripper",
+        "dims": 1,
+        "format": "binary_close_positive",
+        "range": [
+          -1,
+          1
+        ]
+      }
+    },
+    "observation_spec": {
+      "image": {
+        "name": "image",
+        "dims": 0,
+        "format": "rgb_hwc_uint8"
+      },
+      "wrist_image": {
+        "name": "image",
+        "dims": 0,
+        "format": "rgb_hwc_uint8"
+      },
+      "state": {
+        "name": "state",
+        "dims": 8,
+        "format": "eef_pos3_axisangle3_gripper2"
+      },
+      "language": {
+        "name": "language",
+        "dims": 0,
+        "format": "language"
+      }
+    }
+  },
+  "seed": 7,
+  "metric_keys": {
+    "success": "mean"
+  },
+  "mean_success": 0.0,
+  "num_episodes_total": 2
+}

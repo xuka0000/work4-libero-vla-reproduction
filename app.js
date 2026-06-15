@@ -1,27 +1,124 @@
-const statusClass = (state) => {
-  if (state.includes("completed main")) return "completed";
-  if (state.includes("smoke")) return "smoke";
-  if (state.includes("running")) return "running";
-  return "";
-};
-
-const formatRate = (row) => {
-  if (row.success_rate === null || row.success_rate === undefined) return "pending";
-  const prefix = row.state.includes("running") ? "partial " : "";
-  return `${prefix}${(row.success_rate * 100).toFixed(0)}%`;
-};
-
 const text = (selector, value) => {
   const node = document.querySelector(selector);
-  if (node) node.textContent = value;
+  if (node) node.textContent = value || "";
+};
+
+const clear = (selector) => {
+  const node = document.querySelector(selector);
+  if (node) node.innerHTML = "";
+  return node;
 };
 
 const list = (selector, values) => {
-  const node = document.querySelector(selector);
-  node.innerHTML = "";
+  const node = clear(selector);
   values.forEach((value) => {
     const item = document.createElement("li");
     item.textContent = value;
+    node.appendChild(item);
+  });
+};
+
+const linkList = (selector, values) => {
+  const node = clear(selector);
+  values.forEach((value) => {
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = value.href;
+    link.textContent = value.label;
+    item.appendChild(link);
+    node.appendChild(item);
+  });
+};
+
+const renderButtons = (buttons) => {
+  const node = clear("#buttons");
+  buttons.forEach((button) => {
+    const link = document.createElement("a");
+    link.href = button.href;
+    link.textContent = button.label;
+    node.appendChild(link);
+  });
+};
+
+const renderParagraphs = (selector, paragraphs) => {
+  const node = clear(selector);
+  paragraphs.forEach((paragraph) => {
+    const p = document.createElement("p");
+    p.textContent = paragraph;
+    node.appendChild(p);
+  });
+};
+
+const renderStack = (items) => {
+  const node = clear("#technical-stack");
+  items.forEach((item) => {
+    const tag = document.createElement("span");
+    tag.textContent = item;
+    node.appendChild(tag);
+  });
+};
+
+const renderHighlights = (items) => {
+  const node = clear("#highlights");
+  items.forEach((item) => {
+    const card = document.createElement("article");
+    card.className = "metric-card";
+
+    const value = document.createElement("strong");
+    value.textContent = item.value;
+
+    const label = document.createElement("span");
+    label.textContent = item.label;
+
+    card.append(value, label);
+    node.appendChild(card);
+  });
+};
+
+const renderRollouts = (rollouts) => {
+  const node = clear("#rollout-gallery");
+  rollouts.forEach((rollout) => {
+    const card = document.createElement("article");
+    card.className = "video-card";
+
+    const video = document.createElement("video");
+    video.controls = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "metadata";
+    video.src = rollout.video;
+    video.poster = rollout.poster;
+
+    const body = document.createElement("div");
+    body.className = "video-card-body";
+
+    const title = document.createElement("h3");
+    title.textContent = rollout.title;
+
+    const task = document.createElement("p");
+    task.textContent = rollout.task;
+
+    const meta = document.createElement("p");
+    meta.className = "muted";
+    meta.textContent = `${rollout.status}; ${rollout.frames} frames at ${rollout.fps} FPS`;
+
+    const evidence = document.createElement("a");
+    evidence.href = rollout.evidence;
+    evidence.textContent = "step evidence";
+
+    body.append(title, task, meta, evidence);
+    card.append(video, body);
+    node.appendChild(card);
+  });
+};
+
+const renderTimeline = (entries) => {
+  const node = clear("#timeline");
+  entries.forEach((entry) => {
+    const item = document.createElement("li");
+    const time = document.createElement("strong");
+    time.textContent = entry.time;
+    item.append(time, document.createTextNode(` ${entry.event}`));
     node.appendChild(item);
   });
 };
@@ -34,94 +131,23 @@ const render = (data) => {
   text("#updated-at", `Updated ${data.updated_at}`);
   text("#method-title", data.method.title);
 
-  const buttons = document.querySelector("#buttons");
-  buttons.innerHTML = "";
-  data.buttons.forEach((button) => {
-    const link = document.createElement("a");
-    link.href = button.href;
-    link.textContent = button.label;
-    buttons.appendChild(link);
-  });
+  renderButtons(data.buttons);
 
   const video = document.querySelector("#teaser-video");
   video.src = data.teaser.src;
   video.poster = data.teaser.poster;
   text("#teaser-caption", data.teaser.caption);
 
-  const abstract = document.querySelector("#abstract-text");
-  abstract.innerHTML = "";
-  data.abstract.forEach((paragraph) => {
-    const p = document.createElement("p");
-    p.textContent = paragraph;
-    abstract.appendChild(p);
-  });
-
+  renderParagraphs("#abstract-text", data.abstract);
+  renderHighlights(data.visual_highlights);
+  renderRollouts(data.visual_rollouts);
   list("#method-points", data.method.points);
+  renderStack(data.technical_stack);
+  linkList("#evidence-files", data.evidence_files);
+  renderTimeline(data.timeline);
   list("#boundaries", data.boundaries);
   list("#next-actions", data.next_actions);
-
-  const stack = document.querySelector("#technical-stack");
-  stack.innerHTML = "";
-  data.technical_stack.forEach((item) => {
-    const tag = document.createElement("span");
-    tag.textContent = item;
-    stack.appendChild(tag);
-  });
-
-  const highlights = document.querySelector("#highlights");
-  highlights.innerHTML = "";
-  data.result_highlights.forEach((metric) => {
-    const card = document.createElement("article");
-    card.className = "metric-card";
-    const value = document.createElement("strong");
-    value.textContent = metric.value;
-    const label = document.createElement("span");
-    label.textContent = metric.label;
-    card.append(value, label);
-    highlights.appendChild(card);
-  });
-
-  const rows = document.querySelector("#result-rows");
-  rows.innerHTML = "";
-  data.reproduction_rows.forEach((row) => {
-    const tr = document.createElement("tr");
-    const rate = formatRate(row);
-    let success = "pending";
-    if (row.state.includes("running") && row.completed !== undefined) {
-      success = `${row.successes}/${row.completed} observed, ${row.episodes} planned`;
-    } else if (row.successes !== null && row.successes !== undefined) {
-      success = `${row.successes}/${row.episodes}`;
-    }
-
-    tr.innerHTML = `
-      <td><strong>${row.algorithm}</strong></td>
-      <td>${row.run}</td>
-      <td><span class="status-pill ${statusClass(row.state)}">${row.state}</span></td>
-      <td>${rate} <span class="muted">(${success})</span></td>
-      <td>${row.episodes}</td>
-      <td>${row.truth_level}<br><a href="evidence/public_baseline_queue_status_20260612.md">evidence snapshot</a></td>
-    `;
-    rows.appendChild(tr);
-  });
-
-  const timeline = document.querySelector("#timeline");
-  timeline.innerHTML = "";
-  data.timeline.forEach((entry) => {
-    const item = document.createElement("li");
-    item.innerHTML = `<strong>${entry.time}</strong> ${entry.event}`;
-    timeline.appendChild(item);
-  });
-
-  const refs = document.querySelector("#references");
-  refs.innerHTML = "";
-  data.references.forEach((entry) => {
-    const item = document.createElement("li");
-    const link = document.createElement("a");
-    link.href = entry.url;
-    link.textContent = entry.label;
-    item.appendChild(link);
-    refs.appendChild(item);
-  });
+  linkList("#references", data.references);
 };
 
 fetch("data/site.json")

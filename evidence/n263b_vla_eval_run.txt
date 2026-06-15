@@ -1,0 +1,41 @@
+2026-06-15 15:24:01 INFO     vla_eval.watchdog: Progress watchdog armed: 1200s stall timeout.
+2026-06-15 15:24:01 INFO     vla_eval.orchestrator: Starting benchmark: LIBEROBenchmark_LIBEROBenchmark_libero_10_openvla_oft_visual_capture_1task2ep_visual_capture (mode=sync)
+2026-06-15 15:24:01 INFO     vla_eval.connection: Connected to ws://127.0.0.1:8083 (attempt 1/5)
+2026-06-15 15:24:01 INFO     vla_eval.orchestrator: Auto-configured from model server: env_seed=0
+2026-06-15 15:24:01 INFO     vla_eval.orchestrator: Auto-configured from model server: quat_no_antipodal=True
+2026-06-15 15:24:01 INFO     vla_eval.orchestrator: Auto-configured from model server: send_wrist_image=True
+2026-06-15 15:24:01 INFO     vla_eval.orchestrator: Auto-configured from model server: send_state=True
+2026-06-15 15:24:01 WARNING  vla_eval.orchestrator: Spec mismatch: observation [image]: server expects it but benchmark doesn't provide it
+2026-06-15 15:24:01 WARNING  vla_eval.orchestrator: Spec mismatch: observation [wrist_image]: server expects it but benchmark doesn't provide it
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+2026-06-15 15:24:04 WARNING  robosuite_logs: No private macro file found!
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+2026-06-15 15:24:04 WARNING  robosuite_logs: It is recommended to use a private macro file
+[robosuite WARNING] To setup, run: python /root/shared-nvme/work4/envs/n222b_libero_runtime_py38_20260610/lib/python3.8/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+2026-06-15 15:24:04 WARNING  robosuite_logs: To setup, run: python /root/shared-nvme/work4/envs/n222b_libero_runtime_py38_20260610/lib/python3.8/site-packages/robosuite/scripts/setup_macros.py
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+2026-06-15 15:24:31 INFO     vla_eval.orchestrator:   [1/2] put both the alphabet soup and the tomato sauce in the basket ep0: FAIL (steps=220)
+2026-06-15 15:24:31 INFO     vla_eval.benchmarks.video: Saved episode video: /root/shared-nvme/work4/outputs/n263b_openvla_oft_libero10_visual_capture_videopatch_20260615/results/episodes/put both the alphabet soup and the tomato sauce in the basket_ep0000_fail.mp4 (221 frames)
+2026-06-15 15:24:54 INFO     vla_eval.orchestrator:   [2/2] put both the alphabet soup and the tomato sauce in the basket ep1: FAIL (steps=220)
+2026-06-15 15:24:54 INFO     vla_eval.benchmarks.video: Saved episode video: /root/shared-nvme/work4/outputs/n263b_openvla_oft_libero10_visual_capture_videopatch_20260615/results/episodes/put both the alphabet soup and the tomato sauce in the basket_ep0001_fail.mp4 (221 frames)
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[Warning]: datasets path /root/shared-nvme/work4/public_code_cache/n222b_libero_runtime_20260610/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /root/shared-nvme/work4/public_code_cache/n222b_libero_runtime_20260610/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /root/shared-nvme/work4/public_code_cache/n222b_libero_runtime_20260610/LIBERO/libero/datasets does not exist!
+
+============================================================
+Benchmark: 
+LIBEROBenchmark_LIBEROBenchmark_libero_10_openvla_oft_visual_capture_1task2ep_vi
+sual_capture (mode: sync)
+============================================================
+  put both the alphabet soup and the tomato sauce in the basket   0.0% (0/2)
+────────────────────────────────────────────────────────────
+  Overall                                    0.0%
+============================================================
+
+2026-06-15 15:24:57 INFO     vla_eval.results.merge: Wrote aggregate: /root/shared-nvme/work4/outputs/n263b_openvla_oft_libero10_visual_capture_videopatch_20260615/results/LIBEROBenchmark_LIBEROBenchmark_libero_10_openvla_oft_visual_capture_1task2ep_visual_capture_aggregate.json (2 episodes)
+
+LIBEROBenchmark_LIBEROBenchmark_libero_10_openvla_oft_visual_capture_1task2ep_visual_capture: 0.0%

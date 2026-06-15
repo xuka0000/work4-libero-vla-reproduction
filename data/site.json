@@ -1,25 +1,25 @@
 {
   "workspace": "work4",
-  "title": "LIBERO-10 Public VLA Reproduction Matrix",
-  "subtitle": "Same-protocol public VLA baselines under the work4 control-realizability queue",
+  "title": "LIBERO Robotic Arm Control Visual Evidence",
+  "subtitle": "Real simulator rollout videos from the work4 OpenVLA-OFT visual-capture run on LIBERO-10.",
   "authors": [
     "work4 experiment workspace",
     "xuka0000"
   ],
-  "venue": "Evidence page, updated 2026-06-15 13:23 +08",
-  "updated_at": "2026-06-15 13:23 +08",
+  "venue": "Visual evidence page, updated 2026-06-15 15:30 +08",
+  "updated_at": "2026-06-15 15:30 +08",
   "buttons": [
     {
-      "label": "Reproduction Table",
-      "href": "#results"
+      "label": "Control Video",
+      "href": "#rollouts"
     },
     {
-      "label": "Efficiency Video",
-      "href": "#video"
+      "label": "Evidence Files",
+      "href": "#evidence"
     },
     {
-      "label": "Evidence Snapshot",
-      "href": "evidence/public_baseline_queue_status_20260612.md"
+      "label": "Boundaries",
+      "href": "#boundaries-section"
     },
     {
       "label": "GitHub",
@@ -28,216 +28,119 @@
   ],
   "teaser": {
     "type": "video",
-    "src": "media/work4_libero10_efficiency.mp4",
-    "poster": "media/work4_libero10_efficiency_poster.png",
-    "caption": "Efficiency and reproduction-state animation generated from the work4 experiment log. This is not a rollout recording."
+    "src": "media/libero_visual_capture/n263b_openvla_oft_libero10_task0_ep0000_fail.mp4",
+    "poster": "media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png",
+    "caption": "Actual LIBERO simulator rollout captured from N263B. The task is to put the alphabet soup and tomato sauce in the basket. This is qualitative control footage, not a metric animation."
   },
   "abstract": [
-    "This page summarizes the current work4 public VLA reproduction branch after the LIBERO Spatial saturation finding. All main rows use the harder LIBERO-10 suite with ten tasks, ten episodes per task, seed 7, and the same local evaluation harness unless marked otherwise.",
-    "The page separates completed main metrics, smoke runs, cache preparation, and running states. Failed pre-health attempts are not reported as algorithm performance. The intent is to make the current comparison boundary visible before using the results in a thesis or paper."
+    "This page now foregrounds the visible robotic control behavior instead of a reproduction scoreboard. The videos show OpenVLA-OFT controlling a simulated tabletop manipulation task in LIBERO-10 through the local work4 evaluation harness.",
+    "The two episodes are failure cases, but they are useful visual evidence because they expose what the controller actually does in the scene. The page therefore presents them as qualitative rollout footage and keeps metric interpretation out of the first screen."
   ],
   "method": {
-    "title": "Protocol",
+    "title": "Visual Capture Protocol",
     "points": [
-      "Benchmark suite: LIBERO-10.",
-      "Comparison unit: ten tasks by ten episodes for each public baseline main row.",
-      "Runtime boundary: same local work4 harness, RTX 5090 sm_120 repair when required, seed 7.",
-      "Reporting rule: only rows with health, rollout, aggregate, and zero error episodes are treated as completed metric rows."
+      "Policy: OpenVLA-OFT checkpoint moojink/openvla-7b-oft-finetuned-libero-10.",
+      "Task: put both the alphabet soup and the tomato sauce in the basket.",
+      "Suite: LIBERO-10 task 0 with two recorded episodes and seed 7.",
+      "Recording: 20 FPS videos with 221 frames per episode from the actual simulator rollout.",
+      "Repair: the harness video recorder was patched for Python 3.8 type-alias compatibility before rerun."
     ]
   },
   "technical_stack": [
-    "LIBERO evaluation harness",
-    "OpenPI and OpenVLA family model servers",
-    "Hugging Face model cache",
-    "RTX 5090 CUDA sm_120 repair route",
-    "PowerShell bridge checkpoint and evidence ledger"
+    "LIBERO simulator",
+    "OpenVLA-OFT model server",
+    "VLA evaluation harness",
+    "RTX 5090 sm_120 repair environment",
+    "EpisodeVideoRecorder MP4 export"
   ],
-  "result_highlights": [
+  "visual_highlights": [
     {
-      "label": "Completed LIBERO-10 main rows",
-      "value": "8"
+      "label": "Recorded rollouts",
+      "value": "2"
     },
     {
-      "label": "Best current main success",
-      "value": "0.26"
+      "label": "Total frames",
+      "value": "442"
     },
     {
-      "label": "Best current method",
-      "value": "VLANeXt N260E"
+      "label": "Video size",
+      "value": "256 x 256"
     },
     {
-      "label": "Active row",
-      "value": "StarVLA FAST N262D"
+      "label": "Metric claim",
+      "value": "none"
     }
   ],
-  "reproduction_rows": [
+  "visual_rollouts": [
     {
-      "algorithm": "openpi pi0.5",
-      "run": "N251",
-      "state": "completed main",
-      "suite": "LIBERO-10",
-      "episodes": 100,
-      "successes": 21,
-      "success_rate": 0.21,
-      "errors": 0,
-      "truth_level": "verified aggregate",
-      "source": "/root/shared-nvme/work4/outputs/n251_openpi_pi05_libero10_10task10ep_harder_suite_20260613"
+      "title": "OpenVLA-OFT LIBERO-10 task 0, episode 0",
+      "task": "Put the alphabet soup and the tomato sauce in the basket.",
+      "status": "failure rollout",
+      "video": "media/libero_visual_capture/n263b_openvla_oft_libero10_task0_ep0000_fail.mp4",
+      "poster": "media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png",
+      "frames": 221,
+      "fps": 20,
+      "evidence": "evidence/n263b_openvla_oft_libero10_task0_ep0000_fail.jsonl",
+      "remote_source": "/root/shared-nvme/work4/outputs/n263b_openvla_oft_libero10_visual_capture_videopatch_20260615/results/episodes/put both the alphabet soup and the tomato sauce in the basket_ep0000_fail.mp4"
     },
     {
-      "algorithm": "OpenVLA-OFT",
-      "run": "N252B",
-      "state": "completed main",
-      "suite": "LIBERO-10",
-      "episodes": 100,
-      "successes": 24,
-      "success_rate": 0.24,
-      "errors": 0,
-      "truth_level": "verified aggregate",
-      "source": "/root/shared-nvme/work4/outputs/n252b_openvla_oft_libero10_prefetch_retry_10task10ep_harder_suite_20260613"
+      "title": "OpenVLA-OFT LIBERO-10 task 0, episode 1",
+      "task": "Put the alphabet soup and the tomato sauce in the basket.",
+      "status": "failure rollout",
+      "video": "media/libero_visual_capture/n263b_openvla_oft_libero10_task0_ep0001_fail.mp4",
+      "poster": "media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png",
+      "frames": 221,
+      "fps": 20,
+      "evidence": "evidence/n263b_openvla_oft_libero10_task0_ep0001_fail.jsonl",
+      "remote_source": "/root/shared-nvme/work4/outputs/n263b_openvla_oft_libero10_visual_capture_videopatch_20260615/results/episodes/put both the alphabet soup and the tomato sauce in the basket_ep0001_fail.mp4"
+    }
+  ],
+  "evidence_files": [
+    {
+      "label": "N263B visual-capture manifest",
+      "href": "evidence/n263b_openvla_oft_libero10_visual_capture_manifest.json"
     },
     {
-      "algorithm": "openpi pi0 base",
-      "run": "N254W",
-      "state": "completed main",
-      "suite": "LIBERO-10",
-      "episodes": 100,
-      "successes": 1,
-      "success_rate": 0.01,
-      "errors": 0,
-      "truth_level": "verified aggregate",
-      "source": "/root/shared-nvme/work4/outputs/n254w_openpi_pi0_base_libero10_10task10ep_harder_suite_20260613"
+      "label": "N263B aggregate for recorded episodes",
+      "href": "evidence/n263b_openvla_oft_libero10_visual_capture_aggregate.json"
     },
     {
-      "algorithm": "Isaac GR00T N1.6",
-      "run": "N257",
-      "state": "completed main",
-      "suite": "LIBERO-10",
-      "episodes": 100,
-      "successes": 0,
-      "success_rate": 0.0,
-      "errors": 0,
-      "truth_level": "verified aggregate",
-      "source": "/root/shared-nvme/work4/outputs/n257_groot_n16_sm120_repair_libero10_10task10ep_public_main_20260614"
+      "label": "N263B rollout log",
+      "href": "evidence/n263b_vla_eval_run.txt"
     },
     {
-      "algorithm": "DB-CogACT",
-      "run": "N258D",
-      "state": "completed main",
-      "suite": "LIBERO-10",
-      "episodes": 100,
-      "successes": 13,
-      "success_rate": 0.13,
-      "errors": 0,
-      "truth_level": "verified aggregate",
-      "source": "/root/shared-nvme/work4/outputs/n258d_db_cogact_libero10_uv_cached_10task10ep_public_main_20260615"
+      "label": "Video-recorder compatibility log",
+      "href": "evidence/n263b_video_recorder_compat.txt"
     },
     {
-      "algorithm": "X-VLA",
-      "run": "N259C",
-      "state": "completed main",
-      "suite": "LIBERO-10",
-      "episodes": 100,
-      "successes": 21,
-      "success_rate": 0.21,
-      "errors": 0,
-      "truth_level": "verified aggregate",
-      "source": "/root/shared-nvme/work4/outputs/n259c_xvla_libero10_pb_hf_timeout_10task10ep_public_main_20260615"
-    },
-    {
-      "algorithm": "VLANeXt",
-      "run": "N260E",
-      "state": "completed main",
-      "suite": "LIBERO-10",
-      "episodes": 100,
-      "successes": 26,
-      "success_rate": 0.26,
-      "errors": 0,
-      "truth_level": "verified aggregate",
-      "source": "/root/shared-nvme/work4/outputs/n260e_vlanext_libero10_local_ckpt_sm120_10task10ep_public_main_20260615"
-    },
-    {
-      "algorithm": "StarVLA Qwen2.5 OFT",
-      "run": "N261E",
-      "state": "completed main",
-      "suite": "LIBERO-10",
-      "episodes": 100,
-      "successes": 4,
-      "success_rate": 0.04,
-      "errors": 0,
-      "truth_level": "verified aggregate",
-      "source": "/root/shared-nvme/work4/outputs/n261e_starvla_qwen25_oft_libero10_cleanld_sm120_cached_10task10ep_public_main_20260615"
-    },
-    {
-      "algorithm": "StarVLA Qwen2.5 FAST",
-      "run": "N262C",
-      "state": "completed smoke",
-      "suite": "LIBERO-10",
-      "episodes": 10,
-      "successes": 0,
-      "success_rate": 0.0,
-      "errors": 0,
-      "truth_level": "verified smoke only",
-      "source": "/root/shared-nvme/work4/outputs/n262c_starvla_qwen25_fast_libero10_cleanld_sm120_cached_10task1ep_public_smoke_20260615"
-    },
-    {
-      "algorithm": "StarVLA Qwen2.5 FAST",
-      "run": "N262D",
-      "state": "running main 22/100",
-      "suite": "LIBERO-10",
-      "episodes": 100,
-      "completed": 22,
-      "successes": 0,
-      "success_rate": 0.0,
-      "errors": 0,
-      "truth_level": "running partial, no aggregate",
-      "source": "/root/shared-nvme/work4/outputs/n262d_starvla_qwen25_fast_libero10_cleanld_sm120_cached_10task10ep_public_main_20260615"
+      "label": "Full baseline evidence snapshot",
+      "href": "evidence/public_baseline_queue_status_20260612.md"
     }
   ],
   "timeline": [
     {
-      "time": "2026-06-13 06:13 +08",
-      "event": "N251 openpi pi0.5 completed LIBERO-10 at 0.21."
+      "time": "2026-06-15 15:13 +08",
+      "event": "Initial N263 visual capture reached the model server but failed before rollout because the harness video module used an incompatible runtime type alias."
     },
     {
-      "time": "2026-06-13",
-      "event": "N252B OpenVLA-OFT completed LIBERO-10 at 0.24."
+      "time": "2026-06-15 15:22 +08",
+      "event": "N263B started after adding a video-recorder compatibility patch and import check."
     },
     {
-      "time": "2026-06-14",
-      "event": "N257 Isaac GR00T N1.6 completed the repaired sm_120 main row at 0.00."
-    },
-    {
-      "time": "2026-06-15 05:28 +08",
-      "event": "N258D DB-CogACT completed at 0.13."
-    },
-    {
-      "time": "2026-06-15 06:35 +08",
-      "event": "N259C X-VLA completed at 0.21."
-    },
-    {
-      "time": "2026-06-15 09:27 +08",
-      "event": "N260E VLANeXt completed at 0.26."
-    },
-    {
-      "time": "2026-06-15 11:23 +08",
-      "event": "N261E StarVLA Qwen2.5 OFT completed at 0.04."
-    },
-    {
-      "time": "2026-06-15 13:23 +08",
-      "event": "N262D StarVLA Qwen2.5 FAST was running with health and rollout progress. The partial progress file reported 22/100 completed, 0 successes, 22 fail rows, 0 errors, and no aggregate."
+      "time": "2026-06-15 15:24 +08",
+      "event": "N263B completed two LIBERO-10 task-0 episodes and exported two MP4 rollout videos, each with 221 frames."
     }
   ],
   "boundaries": [
-    "This is a work4 same-harness reproduction page, not an official public leaderboard.",
-    "LIBERO Spatial rows are not the main comparison because the route saturated near 0.98 to 0.99.",
-    "Smoke rows are shown as runability evidence and are not counted as completed main metrics.",
-    "Remote output paths are retained as evidence identifiers. They are not public model artifacts.",
-    "No hardware robot, UAV, or sim-to-real deployment claim is made from these LIBERO rows."
+    "The videos are real simulator rollouts, not generated illustrations and not metric animations.",
+    "Both displayed episodes are failure cases, so the page should be read as qualitative control evidence rather than a success demonstration.",
+    "This is not hardware robot evidence and does not support a sim-to-real claim.",
+    "The broader public-baseline metric table remains an evidence snapshot, but it is not the main homepage content."
   ],
   "next_actions": [
-    "Monitor N262D from the 22/100 partial state until the 100-episode aggregate is available.",
-    "Add the N262D main metric only if the aggregate has 100 episodes and zero error rows.",
-    "Continue the public candidate table from top to bottom after N262D finishes or blocks."
+    "Capture one or more successful-looking qualitative rollouts if a later policy or task produces them.",
+    "Add side-by-side videos only when the media comes from real recorded episodes.",
+    "Keep the data table as secondary evidence and use the homepage primarily for intuitive control behavior."
   ],
   "references": [
     {

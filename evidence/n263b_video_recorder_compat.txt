@@ -1,0 +1,3 @@
+video_recorder_compat_patch_applied=true
+video_py=/root/shared-nvme/work4/public_code_cache/n205_direction1_benchmark_prep_20260608/vla-evaluation-harness/src/vla_eval/benchmarks/video.py
+video_recorder_compat_import_ok
