@@ -14,10 +14,17 @@
     <header class="hero">
       <div class="paper-shell">
         <p class="eyebrow" id="venue">Evidence page</p>
-        <h1 id="title">LIBERO-10 Public VLA Reproduction Matrix</h1>
-        <p class="subtitle" id="subtitle"></p>
-        <p class="authors" id="authors"></p>
-        <nav class="button-row" id="buttons" aria-label="Project links"></nav>
+        <h1 id="title">LIBERO Robotic Arm Control Visual Evidence</h1>
+        <p class="subtitle" id="subtitle">
+          Real simulator rollout videos from the work4 OpenVLA-OFT visual-capture run on LIBERO-10.
+        </p>
+        <p class="authors" id="authors">work4 experiment workspace / xuka0000</p>
+        <nav class="button-row" id="buttons" aria-label="Project links">
+          <a href="#rollouts">Control Video</a>
+          <a href="#evidence">Evidence Files</a>
+          <a href="#boundaries-section">Boundaries</a>
+          <a href="https://github.com/xuka0000/work4-libero-vla-reproduction">GitHub</a>
+        </nav>
         <figure class="hero-teaser">
           <video
             id="teaser-video"
@@ -27,8 +34,12 @@
             loop
             playsinline
             preload="metadata"
+            poster="media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png"
+            src="media/libero_visual_capture/n263b_openvla_oft_libero10_task0_ep0000_fail.mp4"
           ></video>
-          <figcaption id="teaser-caption"></figcaption>
+          <figcaption id="teaser-caption">
+            Actual LIBERO simulator rollout captured from N263B. This is qualitative control footage, not a metric animation.
+          </figcaption>
         </figure>
       </div>
     </header>
