@@ -1,3 +1,11 @@
+const state = {
+  task: "All",
+  algorithm: "All",
+  outcome: "All",
+};
+
+let siteData = null;
+
 const text = (selector, value) => {
   const node = document.querySelector(selector);
   if (node) node.textContent = value || "";
@@ -9,26 +17,16 @@ const clear = (selector) => {
   return node;
 };
 
-const list = (selector, values) => {
-  const node = clear(selector);
-  values.forEach((value) => {
-    const item = document.createElement("li");
-    item.textContent = value;
-    node.appendChild(item);
-  });
+const formatRate = (value) => {
+  if (value === null || value === undefined) return "n/a";
+  return `${Math.round(value * 100)}%`;
 };
 
-const linkList = (selector, values) => {
-  const node = clear(selector);
-  values.forEach((value) => {
-    const item = document.createElement("li");
-    const link = document.createElement("a");
-    link.href = value.href;
-    link.textContent = value.label;
-    item.appendChild(link);
-    node.appendChild(item);
-  });
-};
+const statusClass = (value) =>
+  String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
 const renderButtons = (buttons) => {
   const node = clear("#buttons");
@@ -46,6 +44,27 @@ const renderParagraphs = (selector, paragraphs) => {
     const p = document.createElement("p");
     p.textContent = paragraph;
     node.appendChild(p);
+  });
+};
+
+const renderList = (selector, values) => {
+  const node = clear(selector);
+  values.forEach((value) => {
+    const item = document.createElement("li");
+    item.textContent = value;
+    node.appendChild(item);
+  });
+};
+
+const renderLinkList = (selector, values) => {
+  const node = clear(selector);
+  values.forEach((value) => {
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = value.href;
+    link.textContent = value.label;
+    item.appendChild(link);
+    node.appendChild(item);
   });
 };
 
@@ -75,41 +94,292 @@ const renderHighlights = (items) => {
   });
 };
 
-const renderRollouts = (rollouts) => {
-  const node = clear("#rollout-gallery");
-  rollouts.forEach((rollout) => {
-    const card = document.createElement("article");
-    card.className = "video-card";
+const flattenRollouts = (data) =>
+  data.visual_task_groups.flatMap((group) =>
+    group.rollouts.map((rollout) => ({
+      ...rollout,
+      groupTaskId: group.task_id,
+      groupTaskName: group.task_name,
+    })),
+  );
 
-    const video = document.createElement("video");
-    video.controls = true;
-    video.muted = true;
-    video.playsInline = true;
-    video.preload = "metadata";
-    video.src = rollout.video;
-    video.poster = rollout.poster;
+const optionMatches = (selected, value) => selected === "All" || selected === value;
 
-    const body = document.createElement("div");
-    body.className = "video-card-body";
+const rolloutMatches = (rollout) => {
+  const outcome = rollout.outcome || "";
+  if (!optionMatches(state.task, rollout.task_id)) return false;
+  if (!optionMatches(state.algorithm, rollout.algorithm)) return false;
+  if (state.outcome === "Metric only") return false;
+  if (state.outcome === "Video available") return true;
+  if (state.outcome !== "All" && state.outcome !== outcome) return false;
+  return true;
+};
 
-    const title = document.createElement("h3");
-    title.textContent = rollout.title;
-
-    const task = document.createElement("p");
-    task.textContent = rollout.task;
-
-    const meta = document.createElement("p");
-    meta.className = "muted";
-    meta.textContent = `${rollout.status}; ${rollout.frames} frames at ${rollout.fps} FPS`;
-
-    const evidence = document.createElement("a");
-    evidence.href = rollout.evidence;
-    evidence.textContent = "step evidence";
-
-    body.append(title, task, meta, evidence);
-    card.append(video, body);
-    node.appendChild(card);
+const renderSegmentedControl = (selector, options, selected, onSelect) => {
+  const node = clear(selector);
+  options.forEach((option) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = option;
+    button.className = option === selected ? "active" : "";
+    button.setAttribute("aria-pressed", option === selected ? "true" : "false");
+    button.addEventListener("click", () => onSelect(option));
+    node.appendChild(button);
   });
+};
+
+const selectedTaskGroups = () =>
+  siteData.visual_task_groups.filter((group) => optionMatches(state.task, group.task_id));
+
+const metricOnlyAlgorithms = () => {
+  const algorithms = siteData.video_coverage_matrix.algorithms.filter(
+    (algorithm) => algorithm !== "OpenVLA-OFT",
+  );
+  if (state.algorithm === "All") return algorithms;
+  return algorithms.includes(state.algorithm) ? [state.algorithm] : [];
+};
+
+const buildMetricOnlySlots = () => {
+  if (state.outcome !== "Metric only" && state.algorithm === "All") return [];
+  if (state.outcome === "Success") return [];
+  if (state.outcome === "Failure" || state.outcome === "Video available") return [];
+
+  const algorithms = metricOnlyAlgorithms();
+  const groups = selectedTaskGroups();
+  return groups.flatMap((group) =>
+    algorithms.map((algorithm) => ({
+      algorithm,
+      task_id: group.task_id,
+      task: group.task_name,
+      title: `${algorithm} ${group.task_id}`,
+      status: "metric only",
+    })),
+  );
+};
+
+const renderVideoCard = (rollout) => {
+  const card = document.createElement("article");
+  card.className = `video-card outcome-${statusClass(rollout.outcome)}`;
+
+  const video = document.createElement("video");
+  video.controls = true;
+  video.muted = true;
+  video.playsInline = true;
+  video.preload = "metadata";
+  video.src = rollout.video;
+  video.poster = rollout.poster;
+
+  const body = document.createElement("div");
+  body.className = "video-card-body";
+
+  const meta = document.createElement("div");
+  meta.className = "card-kicker";
+  meta.textContent = `${rollout.algorithm} / ${rollout.task_id}`;
+
+  const title = document.createElement("h3");
+  title.textContent = rollout.title;
+
+  const task = document.createElement("p");
+  task.textContent = rollout.task;
+
+  const status = document.createElement("p");
+  status.className = "muted";
+  status.textContent = `${rollout.status}; ${rollout.frames} frames at ${rollout.fps} FPS`;
+
+  const row = document.createElement("div");
+  row.className = "card-row";
+
+  const pill = document.createElement("span");
+  pill.className = `status-pill ${statusClass(rollout.outcome)}`;
+  pill.textContent = rollout.outcome;
+
+  const evidence = document.createElement("a");
+  evidence.href = rollout.evidence;
+  evidence.textContent = "step evidence";
+
+  row.append(pill, evidence);
+  body.append(meta, title, task, status, row);
+  card.append(video, body);
+  return card;
+};
+
+const renderMetricSlot = (slot) => {
+  const card = document.createElement("article");
+  card.className = "video-card metric-slot";
+
+  const placeholder = document.createElement("div");
+  placeholder.className = "metric-placeholder";
+  placeholder.textContent = "Metric only";
+
+  const body = document.createElement("div");
+  body.className = "video-card-body";
+
+  const meta = document.createElement("div");
+  meta.className = "card-kicker";
+  meta.textContent = `${slot.algorithm} / ${slot.task_id}`;
+
+  const title = document.createElement("h3");
+  title.textContent = slot.title;
+
+  const task = document.createElement("p");
+  task.textContent = slot.task;
+
+  const note = document.createElement("p");
+  note.className = "muted";
+  note.textContent = "This algorithm has a reproduced metric row, but no local MP4 clip for this task.";
+
+  body.append(meta, title, task, note);
+  card.append(placeholder, body);
+  return card;
+};
+
+const renderGallery = () => {
+  const node = clear("#task-gallery");
+  const videos = flattenRollouts(siteData).filter(rolloutMatches);
+  const slots = buildMetricOnlySlots();
+
+  videos.forEach((rollout) => node.appendChild(renderVideoCard(rollout)));
+  slots.forEach((slot) => node.appendChild(renderMetricSlot(slot)));
+
+  if (!videos.length && !slots.length) {
+    const empty = document.createElement("p");
+    empty.className = "empty-state";
+    empty.textContent = "No recorded clip matches this filter. Success clips are not available yet.";
+    node.appendChild(empty);
+  }
+};
+
+const rerenderFilters = () => {
+  renderSegmentedControl("#task-filter", siteData.filters.tasks, state.task, (value) => {
+    state.task = value;
+    rerenderFilters();
+    renderGallery();
+  });
+  renderSegmentedControl(
+    "#algorithm-filter",
+    siteData.filters.algorithms,
+    state.algorithm,
+    (value) => {
+      state.algorithm = value;
+      rerenderFilters();
+      renderGallery();
+    },
+  );
+  renderSegmentedControl("#outcome-filter", siteData.filters.outcomes, state.outcome, (value) => {
+    state.outcome = value;
+    rerenderFilters();
+    renderGallery();
+  });
+};
+
+const renderCoverageMatrix = () => {
+  const node = clear("#coverage-matrix");
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  ["Task", ...siteData.video_coverage_matrix.algorithms].forEach((label) => {
+    const th = document.createElement("th");
+    th.textContent = label;
+    headRow.appendChild(th);
+  });
+  thead.appendChild(headRow);
+
+  const tbody = document.createElement("tbody");
+  siteData.video_coverage_matrix.rows.forEach((row) => {
+    const tr = document.createElement("tr");
+    const task = document.createElement("th");
+    task.scope = "row";
+    task.textContent = row.task;
+    tr.appendChild(task);
+    siteData.video_coverage_matrix.algorithms.forEach((algorithm) => {
+      const td = document.createElement("td");
+      const value = row.coverage[algorithm];
+      const badge = document.createElement("span");
+      badge.className = `status-pill ${statusClass(value)}`;
+      badge.textContent = value;
+      td.appendChild(badge);
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  table.append(thead, tbody);
+  node.appendChild(table);
+};
+
+const renderPerformanceTable = () => {
+  const node = clear("#performance-table");
+  const table = document.createElement("table");
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>Algorithm</th>
+        <th>Suite</th>
+        <th>Protocol</th>
+        <th>Success</th>
+        <th>Episodes</th>
+        <th>Evidence</th>
+      </tr>
+    </thead>
+  `;
+  const tbody = document.createElement("tbody");
+  siteData.performance_comparison.forEach((row) => {
+    const tr = document.createElement("tr");
+    const evidence = document.createElement("a");
+    evidence.href = row.evidence;
+    evidence.textContent = "source";
+    const cells = [
+      row.algorithm,
+      row.suite,
+      row.protocol,
+      `${formatRate(row.success_rate)} (${row.successes}/${row.episodes})`,
+      String(row.episodes),
+    ];
+    cells.forEach((value, index) => {
+      const cell = document.createElement(index === 0 ? "th" : "td");
+      if (index === 0) cell.scope = "row";
+      cell.textContent = value;
+      tr.appendChild(cell);
+    });
+    const td = document.createElement("td");
+    td.appendChild(evidence);
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  node.appendChild(table);
+};
+
+const renderReproductionTable = () => {
+  const node = clear("#reproduction-table");
+  const table = document.createElement("table");
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>Algorithm</th>
+        <th>Suite</th>
+        <th>Status</th>
+        <th>Success</th>
+        <th>Media</th>
+        <th>Note</th>
+      </tr>
+    </thead>
+  `;
+  const tbody = document.createElement("tbody");
+  siteData.reproduction_rows.forEach((row) => {
+    const tr = document.createElement("tr");
+    [row.algorithm, row.suite, row.state, formatRate(row.success_rate), row.media, row.note].forEach(
+      (value, index) => {
+        const cell = document.createElement(index === 0 ? "th" : "td");
+        if (index === 0) cell.scope = "row";
+        cell.textContent = value;
+        tr.appendChild(cell);
+      },
+    );
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  node.appendChild(table);
 };
 
 const renderTimeline = (entries) => {
@@ -124,6 +394,7 @@ const renderTimeline = (entries) => {
 };
 
 const render = (data) => {
+  siteData = data;
   text("#venue", data.venue);
   text("#title", data.title);
   text("#subtitle", data.subtitle);
@@ -140,14 +411,18 @@ const render = (data) => {
 
   renderParagraphs("#abstract-text", data.abstract);
   renderHighlights(data.visual_highlights);
-  renderRollouts(data.visual_rollouts);
-  list("#method-points", data.method.points);
+  rerenderFilters();
+  renderGallery();
+  renderCoverageMatrix();
+  renderPerformanceTable();
+  renderReproductionTable();
+  renderList("#method-points", data.method.points);
   renderStack(data.technical_stack);
-  linkList("#evidence-files", data.evidence_files);
+  renderLinkList("#evidence-files", data.evidence_files);
   renderTimeline(data.timeline);
-  list("#boundaries", data.boundaries);
-  list("#next-actions", data.next_actions);
-  linkList("#references", data.references);
+  renderList("#boundaries", data.boundaries);
+  renderList("#next-actions", data.next_actions);
+  renderLinkList("#references", data.references);
 };
 
 fetch("data/site.json")
@@ -159,7 +434,7 @@ fetch("data/site.json")
   .catch((error) => {
     const main = document.querySelector("main");
     const message = document.createElement("section");
-    message.className = "paper-shell";
+    message.className = "section-band";
     message.textContent = error.message;
     main.prepend(message);
     console.error(error);

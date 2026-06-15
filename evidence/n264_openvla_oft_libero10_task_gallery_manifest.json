@@ -1,0 +1,170 @@
+{
+  "truth_level": "openvla_oft_sm120_repair_libero_10_visual_capture_no_metric",
+  "created_at": "2026-06-15T08:46:13.075027+00:00",
+  "status": "passed",
+  "reason": "visual_capture_completed",
+  "candidate_id": "openvla_oft",
+  "public_baseline": "OpenVLA-OFT libero_10 sm120 visual capture",
+  "visual_capture_no_metric": true,
+  "suite": "libero_10",
+  "pretrained_checkpoint": "moojink/openvla-7b-oft-finetuned-libero-10",
+  "unnorm_key": "libero_10_no_noops",
+  "episodes_per_task": 1,
+  "max_tasks": 4,
+  "planned_total_episodes": 4,
+  "seed": 7,
+  "max_steps": 220,
+  "num_steps_wait": 10,
+  "run_label": "LIBEROBenchmark_libero_10_openvla_oft_visual_capture_4task1ep_visual_capture",
+  "run_timeout_seconds": 3600,
+  "health_timeout_seconds": 14400,
+  "health_stall_timeout_seconds": 3600,
+  "health_max_timeout_seconds": 43200,
+  "run_rc": 0,
+  "health_ready": true,
+  "episode_started": true,
+  "server_url": "ws://127.0.0.1:8084",
+  "health_url": "http://127.0.0.1:8084/health",
+  "oft_sm120_env": "/root/shared-nvme/work4/envs/openvla_oft_sm120_repair_20260612",
+  "torch_backend_repair": "cu128 torch==2.7.1 torchvision==0.22.1 torchaudio==2.7.1",
+  "local_public_sota_claim": false,
+  "local_metric_claim": false,
+  "failure_layer": "aggregate_written",
+  "repair_hint": "aggregate exists; promote only under the declared same-protocol gate",
+  "aggregate_files": [
+    "results/LIBEROBenchmark_LIBEROBenchmark_libero_10_openvla_oft_visual_capture_4task1ep_visual_capture_aggregate.json"
+  ],
+  "aggregates": [
+    {
+      "path": "results/LIBEROBenchmark_LIBEROBenchmark_libero_10_openvla_oft_visual_capture_4task1ep_visual_capture_aggregate.json",
+      "benchmark": "LIBEROBenchmark_LIBEROBenchmark_libero_10_openvla_oft_visual_capture_4task1ep_visual_capture",
+      "mean_success": 0.0,
+      "num_episodes_total": 4,
+      "seed": 7,
+      "tasks": [
+        {
+          "task": "put both the alphabet soup and the tomato sauce in the basket",
+          "episodes": [
+            {
+              "sid": "8e7b9c42-af61-47ed-9b8a-649af845281c",
+              "eid": "c1d6d490-3ec8-4230-9676-b3dec0afef6d",
+              "episode_id": 0,
+              "metrics": {
+                "success": false
+              },
+              "steps": 220,
+              "elapsed_sec": 23.562,
+              "name": "put both the alphabet soup and the tomato sauce in the basket",
+              "suite": "libero_10",
+              "task_id": 0,
+              "episode_idx": 0
+            }
+          ],
+          "num_episodes": 1,
+          "avg_steps": 220.0,
+          "mean_success": 0.0
+        },
+        {
+          "task": "put both the cream cheese box and the butter in the basket",
+          "episodes": [
+            {
+              "sid": "8e7b9c42-af61-47ed-9b8a-649af845281c",
+              "eid": "3c0ce902-b45b-429f-812b-7f0903c00ab9",
+              "episode_id": 0,
+              "metrics": {
+                "success": false
+              },
+              "steps": 220,
+              "elapsed_sec": 20.874,
+              "name": "put both the cream cheese box and the butter in the basket",
+              "suite": "libero_10",
+              "task_id": 1,
+              "episode_idx": 0
+            }
+          ],
+          "num_episodes": 1,
+          "avg_steps": 220.0,
+          "mean_success": 0.0
+        },
+        {
+          "task": "put the black bowl in the bottom drawer of the cabinet and close it",
+          "episodes": [
+            {
+              "sid": "8e7b9c42-af61-47ed-9b8a-649af845281c",
+              "eid": "61cd2133-a44a-4ce3-a258-906db2e6f57f",
+              "episode_id": 0,
+              "metrics": {
+                "success": false
+              },
+              "steps": 220,
+              "elapsed_sec": 15.709,
+              "name": "put the black bowl in the bottom drawer of the cabinet and close it",
+              "suite": "libero_10",
+              "task_id": 3,
+              "episode_idx": 0
+            }
+          ],
+          "num_episodes": 1,
+          "avg_steps": 220.0,
+          "mean_success": 0.0
+        },
+        {
+          "task": "turn on the stove and put the moka pot on it",
+          "episodes": [
+            {
+              "sid": "8e7b9c42-af61-47ed-9b8a-649af845281c",
+              "eid": "b15b2aee-304d-4fe2-ba26-0e1212152997",
+              "episode_id": 0,
+              "metrics": {
+                "success": false
+              },
+              "steps": 220,
+              "elapsed_sec": 15.242,
+              "name": "turn on the stove and put the moka pot on it",
+              "suite": "libero_10",
+              "task_id": 2,
+              "episode_idx": 0
+            }
+          ],
+          "num_episodes": 1,
+          "avg_steps": 220.0,
+          "mean_success": 0.0
+        }
+      ]
+    }
+  ],
+  "sqlite_files": [
+    "results/recording-n264_openvla_oft_libero10_task_gallery_20260615.sqlite"
+  ],
+  "jsonl_files": [
+    "results/episodes/put both the alphabet soup and the tomato sauce in the basket_ep0000_fail.jsonl",
+    "results/episodes/put both the cream cheese box and the butter in the basket_ep0000_fail.jsonl",
+    "results/episodes/put the black bowl in the bottom drawer of the cabinet and close it_ep0000_fail.jsonl",
+    "results/episodes/turn on the stove and put the moka pot on it_ep0000_fail.jsonl"
+  ],
+  "mp4_files": [
+    "results/episodes/put both the alphabet soup and the tomato sauce in the basket_ep0000_fail.mp4",
+    "results/episodes/put both the cream cheese box and the butter in the basket_ep0000_fail.mp4",
+    "results/episodes/put the black bowl in the bottom drawer of the cabinet and close it_ep0000_fail.mp4",
+    "results/episodes/turn on the stove and put the moka pot on it_ep0000_fail.mp4"
+  ],
+  "logs": {
+    "server": "model_server.log",
+    "run": "vla_eval_run.log",
+    "health": "server_health.json",
+    "runtime_preflight": "runtime_preflight.log",
+    "env_repair": "env_repair.log",
+    "torch_probe": "torch_sm120_probe.log",
+    "numpy_tensorflow_probe": "numpy_tensorflow_probe.log",
+    "checkpoint_prefetch": "checkpoint_prefetch.log",
+    "video_recorder_compat": "video_recorder_compat.log",
+    "result_files": "result_files.txt"
+  },
+  "non_claims": [
+    "no public SOTA ranking",
+    "visual capture only, not a main metric row",
+    "no ablation launch",
+    "no hardware validation beyond the recorded torch sm120 probe",
+    "no sim to real validation"
+  ]
+}

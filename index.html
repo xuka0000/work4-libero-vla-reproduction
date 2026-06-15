@@ -3,28 +3,25 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LIBERO Robotic Arm Control Visual Evidence</title>
+    <title>LIBERO-10 Robotic Control Reproduction</title>
     <meta
       name="description"
-      content="Real LIBERO robotic arm control rollout videos from the work4 OpenVLA-OFT visual capture run."
+      content="Real LIBERO-10 robotic arm control videos, task-level coverage, and same-harness VLA performance from work4."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="hero">
-      <div class="paper-shell">
-        <p class="eyebrow" id="venue">Evidence page</p>
-        <h1 id="title">LIBERO Robotic Arm Control Visual Evidence</h1>
-        <p class="subtitle" id="subtitle">
-          Real simulator rollout videos from the work4 OpenVLA-OFT visual-capture run on LIBERO-10.
-        </p>
-        <p class="authors" id="authors">work4 experiment workspace / xuka0000</p>
-        <nav class="button-row" id="buttons" aria-label="Project links">
-          <a href="#rollouts">Control Video</a>
-          <a href="#evidence">Evidence Files</a>
-          <a href="#boundaries-section">Boundaries</a>
-          <a href="https://github.com/xuka0000/work4-libero-vla-reproduction">GitHub</a>
-        </nav>
+      <div class="shell hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow" id="venue">Project page</p>
+          <h1 id="title">LIBERO-10 Robotic Control Reproduction</h1>
+          <p class="subtitle" id="subtitle">
+            Real simulator videos, task-level coverage, and same-harness VLA performance.
+          </p>
+          <p class="authors" id="authors">work4 experiment workspace / xuka0000</p>
+          <nav class="button-row" id="buttons" aria-label="Project links"></nav>
+        </div>
         <figure class="hero-teaser">
           <video
             id="teaser-video"
@@ -34,68 +31,151 @@
             loop
             playsinline
             preload="metadata"
-            poster="media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png"
-            src="media/libero_visual_capture/n263b_openvla_oft_libero10_task0_ep0000_fail.mp4"
           ></video>
-          <figcaption id="teaser-caption">
-            Actual LIBERO simulator rollout captured from N263B. This is qualitative control footage, not a metric animation.
-          </figcaption>
+          <figcaption id="teaser-caption"></figcaption>
         </figure>
       </div>
     </header>
 
     <main>
-      <section class="paper-shell narrow" id="abstract">
-        <h2>Abstract</h2>
-        <div id="abstract-text"></div>
+      <section class="section-band intro-band">
+        <div class="shell narrow">
+          <h2>Overview</h2>
+          <div id="abstract-text" class="lead-copy"></div>
+          <div class="highlight-grid" id="highlights"></div>
+        </div>
       </section>
 
-      <section class="paper-shell" id="rollouts">
-        <h2>Visual Rollouts</h2>
-        <div class="highlight-grid" id="highlights"></div>
-        <div class="video-grid" id="rollout-gallery"></div>
+      <section class="section-band" id="task-gallery-section">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Task Gallery</p>
+              <h2>LIBERO-10 Rollout Videos</h2>
+            </div>
+            <p class="section-note">
+              Six real MP4 clips are grouped by task, algorithm, and outcome.
+            </p>
+          </div>
+          <div class="filter-panel" aria-label="Video filters">
+            <div>
+              <span>Task</span>
+              <div class="segmented-control" id="task-filter"></div>
+            </div>
+            <div>
+              <span>Algorithm</span>
+              <div class="segmented-control" id="algorithm-filter"></div>
+            </div>
+            <div>
+              <span>Outcome</span>
+              <div class="segmented-control" id="outcome-filter"></div>
+            </div>
+          </div>
+          <div class="video-grid" id="task-gallery"></div>
+        </div>
       </section>
 
-      <section class="paper-shell split">
-        <article>
-          <h2 id="method-title">Protocol</h2>
-          <ul class="check-list" id="method-points"></ul>
-        </article>
-        <aside class="stack-panel">
-          <h2>Technical Stack</h2>
-          <div class="tag-list" id="technical-stack"></div>
-        </aside>
+      <section class="section-band quiet" id="coverage-section">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Coverage</p>
+              <h2>Video Coverage Matrix</h2>
+            </div>
+            <p class="section-note">
+              The matrix separates available videos from metric-only evidence.
+            </p>
+          </div>
+          <div class="table-wrap" id="coverage-matrix"></div>
+        </div>
       </section>
 
-      <section class="paper-shell" id="evidence">
-        <h2>Evidence Files</h2>
-        <ul class="references" id="evidence-files"></ul>
+      <section class="section-band" id="performance-section">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Metrics</p>
+              <h2>LIBERO-10 Performance</h2>
+            </div>
+            <p class="section-note">
+              Completed same-harness main rows, sorted by success rate.
+            </p>
+          </div>
+          <div class="table-wrap" id="performance-table"></div>
+        </div>
       </section>
 
-      <section class="paper-shell">
-        <h2>Experiment Timeline</h2>
-        <ol class="timeline" id="timeline"></ol>
+      <section class="section-band quiet" id="reproduction-section">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Reproduction</p>
+              <h2>Algorithm Status</h2>
+            </div>
+            <p class="section-note">
+              Completed rows, visual-only rows, and blocked attempts are kept separate.
+            </p>
+          </div>
+          <div class="table-wrap" id="reproduction-table"></div>
+        </div>
       </section>
 
-      <section class="paper-shell split" id="boundaries-section">
-        <article>
-          <h2>Evidence Boundaries</h2>
-          <ul class="check-list" id="boundaries"></ul>
-        </article>
-        <article>
-          <h2>Next Actions</h2>
-          <ul class="check-list" id="next-actions"></ul>
-        </article>
+      <section class="section-band" id="protocol-section">
+        <div class="shell two-column">
+          <article>
+            <p class="eyebrow">Protocol</p>
+            <h2 id="method-title">Evaluation Protocol</h2>
+            <ul class="check-list" id="method-points"></ul>
+          </article>
+          <aside>
+            <p class="eyebrow">Stack</p>
+            <h2>Technical Stack</h2>
+            <div class="tag-list" id="technical-stack"></div>
+          </aside>
+        </div>
       </section>
 
-      <section class="paper-shell">
-        <h2>References</h2>
-        <ul class="references" id="references"></ul>
+      <section class="section-band quiet" id="evidence">
+        <div class="shell two-column">
+          <article>
+            <p class="eyebrow">Evidence</p>
+            <h2>Source Files</h2>
+            <ul class="references" id="evidence-files"></ul>
+          </article>
+          <article>
+            <p class="eyebrow">History</p>
+            <h2>Timeline</h2>
+            <ol class="timeline" id="timeline"></ol>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-band" id="boundaries-section">
+        <div class="shell two-column">
+          <article>
+            <p class="eyebrow">Boundaries</p>
+            <h2>Claim Limits</h2>
+            <ul class="check-list" id="boundaries"></ul>
+          </article>
+          <article>
+            <p class="eyebrow">Next</p>
+            <h2>Planned Additions</h2>
+            <ul class="check-list" id="next-actions"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-band quiet">
+        <div class="shell">
+          <p class="eyebrow">References</p>
+          <h2>Design and Page References</h2>
+          <ul class="references inline-references" id="references"></ul>
+        </div>
       </section>
     </main>
 
     <footer>
-      <div class="paper-shell">
+      <div class="shell">
         <span id="updated-at"></span>
         <span>Generated from work4 evidence files.</span>
       </div>
