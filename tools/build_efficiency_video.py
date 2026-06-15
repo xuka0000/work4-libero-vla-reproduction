@@ -88,7 +88,7 @@ def make_frame(data, frame_idx: int, total_frames: int) -> Image.Image:
         ("Main rows", "8 completed"),
         ("Best row", "VLANeXt N260E 0.26"),
         ("Smoke row", f"{smoke[0]['run']} no main metric"),
-        ("Running row", f"{running[0]['run']} server_starting"),
+        ("Running row", f"{running[0]['run']} {running[0].get('completed', 0)}/100, no aggregate"),
         ("Claim boundary", "No public SOTA claim"),
     ]
     sy = 260
