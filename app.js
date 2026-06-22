@@ -284,7 +284,7 @@ const renderMetricSlot = (slot) => {
 
   const note = document.createElement("p");
   note.className = "muted";
-  note.textContent = "This algorithm has a reproduced metric row, but no local MP4 clip for this task.";
+  note.textContent = "This algorithm has a reproduced metric row, but no local video clip for this task.";
 
   body.append(meta, title, task, note);
   card.append(placeholder, body);

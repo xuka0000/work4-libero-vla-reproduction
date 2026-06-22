@@ -55,7 +55,7 @@
       "Benchmark: WEF-Bench-UAV-Local-Execution, a local UAV execution protocol for waypoint following, dynamic obstacles, stale commands, low energy, and attitude or viewpoint constraints.",
       "Completed metric batch: eight task families, five generated seeds, and six deterministic controller variants, for 240 synthetic trace rows.",
       "Local AirSim videos: three vehicle-observer T2 dynamic-obstacle replays on port 41452 for B1, B3, and Ours_SEFF_pose.",
-      "Preview videos: task-level synthetic MP4 clips for T2, T3, T4, T5, and T12, used as visual evidence of the generated traces.",
+      "Preview videos: task-level synthetic WebM clips for T2, T3, T4, T5, and T12, used as visual evidence of the generated traces.",
       "VLA status: OpenPI pi0.5 has real action-tensor inference rows, but the raw robot action chunks are quarantined and not dispatchable UAV contracts.",
       "Boundary: the page does not claim hardware deployment, RL training completion, public SOTA, or sim-to-real validation."
     ]
@@ -74,7 +74,7 @@
   ],
   "visual_highlights": [
     {
-      "label": "UAV MP4 clips on page",
+      "label": "UAV WebM clips on page",
       "value": "8"
     },
     {
@@ -412,7 +412,7 @@
       "suite": "AirSim trace replay",
       "state": "completed video export",
       "success_rate": null,
-      "media": "three MP4 replays",
+            "media": "three WebM replays",
       "truth_level": "townlab_airsim_trace_replay_video",
       "evidence": "evidence/wef_bench/airsim_t2_dynamic_obstacle_vehicle_observer_batch_summary.json",
       "note": "B1, B3, and Ours_SEFF_pose videos were exported from local AirSim replay on port 41452."
