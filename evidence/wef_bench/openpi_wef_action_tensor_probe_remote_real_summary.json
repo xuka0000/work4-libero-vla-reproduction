@@ -1,0 +1,21 @@
+{
+  "truth_level": "openpi_wef_state_prompt_action_tensor_probe_surrogate_image_no_rollout",
+  "created_at": "2026-06-21T11:34:40.442334+00:00",
+  "model_inference_performed": true,
+  "row_count": 8,
+  "full_action_tensor_count": 8,
+  "finite_action_count": 8,
+  "dispatchable_contract_count": 0,
+  "wef_rollout_count": 0,
+  "image_source_status": "surrogate_droid_example_image_not_wef_camera",
+  "quarantine_reasons": [
+    "robot_action_chunk_semantics_not_uav_contract"
+  ],
+  "non_claims": [
+    "no WEF camera image is used",
+    "no WEF closed-loop rollout is performed",
+    "no OpenPI task-performance metric is claimed",
+    "no public SOTA result is claimed",
+    "raw robot action chunks are not dispatchable UAV contracts"
+  ]
+}

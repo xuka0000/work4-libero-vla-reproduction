@@ -22,6 +22,22 @@ const formatRate = (value) => {
   return `${Math.round(value * 100)}%`;
 };
 
+const rolloutStatusText = (rollout) => {
+  if (rollout.summary) return rollout.summary;
+  if (rollout.frames && rollout.fps) {
+    return `${rollout.status}; ${rollout.frames} frames at ${rollout.fps} FPS`;
+  }
+  return rollout.status || "";
+};
+
+const evidenceLink = (href, label = "source") => {
+  if (!href) return document.createTextNode("n/a");
+  const link = document.createElement("a");
+  link.href = href;
+  link.textContent = label;
+  return link;
+};
+
 const statusClass = (value) =>
   String(value || "")
     .toLowerCase()
@@ -61,7 +77,7 @@ const renderLinkList = (selector, values) => {
   values.forEach((value) => {
     const item = document.createElement("li");
     const link = document.createElement("a");
-    link.href = value.href;
+    link.href = value.href || value.url;
     link.textContent = value.label;
     item.appendChild(link);
     node.appendChild(item);
@@ -77,8 +93,8 @@ const renderStack = (items) => {
   });
 };
 
-const renderHighlights = (items) => {
-  const node = clear("#highlights");
+const renderHighlightsInto = (selector, items) => {
+  const node = clear(selector);
   items.forEach((item) => {
     const card = document.createElement("article");
     card.className = "metric-card";
@@ -93,6 +109,8 @@ const renderHighlights = (items) => {
     node.appendChild(card);
   });
 };
+
+const renderHighlights = (items) => renderHighlightsInto("#highlights", items);
 
 const renderAlgorithmOverview = () => {
   const node = clear("#algorithm-overview");
@@ -171,8 +189,9 @@ const selectedTaskGroups = () =>
   siteData.visual_task_groups.filter((group) => optionMatches(state.task, group.task_id));
 
 const metricOnlyAlgorithms = () => {
+  const videoFamilies = new Set(flattenRollouts(siteData).map((rollout) => rollout.algorithm));
   const algorithms = siteData.video_coverage_matrix.algorithms.filter(
-    (algorithm) => algorithm !== "OpenVLA-OFT",
+    (algorithm) => !videoFamilies.has(algorithm),
   );
   if (state.algorithm === "All") return algorithms;
   return algorithms.includes(state.algorithm) ? [state.algorithm] : [];
@@ -206,7 +225,7 @@ const renderVideoCard = (rollout) => {
   video.playsInline = true;
   video.preload = "metadata";
   video.src = rollout.video;
-  video.poster = rollout.poster;
+  if (rollout.poster) video.poster = rollout.poster;
 
   const body = document.createElement("div");
   body.className = "video-card-body";
@@ -223,7 +242,7 @@ const renderVideoCard = (rollout) => {
 
   const status = document.createElement("p");
   status.className = "muted";
-  status.textContent = `${rollout.status}; ${rollout.frames} frames at ${rollout.fps} FPS`;
+  status.textContent = rolloutStatusText(rollout);
 
   const row = document.createElement("div");
   row.className = "card-row";
@@ -234,7 +253,7 @@ const renderVideoCard = (rollout) => {
 
   const evidence = document.createElement("a");
   evidence.href = rollout.evidence;
-  evidence.textContent = "step evidence";
+  evidence.textContent = rollout.truth_level || "step evidence";
 
   row.append(pill, evidence);
   body.append(meta, title, task, status, row);
@@ -432,7 +451,99 @@ const renderTimeline = (entries) => {
   });
 };
 
-const render = (data) => {
+const renderEvidenceVideoCard = (rollout) => {
+  const card = document.createElement("article");
+  card.className = `video-card outcome-${statusClass(rollout.outcome)}`;
+
+  const video = document.createElement("video");
+  video.controls = true;
+  video.muted = true;
+  video.playsInline = true;
+  video.preload = "metadata";
+  video.src = rollout.video;
+  if (rollout.poster) video.poster = rollout.poster;
+
+  const body = document.createElement("div");
+  body.className = "video-card-body";
+
+  const meta = document.createElement("div");
+  meta.className = "card-kicker";
+  meta.textContent = `${rollout.algorithm} / ${rollout.task_id}`;
+
+  const title = document.createElement("h3");
+  title.textContent = rollout.title;
+
+  const task = document.createElement("p");
+  task.textContent = rollout.task;
+
+  const status = document.createElement("p");
+  status.className = "muted";
+  status.textContent = rolloutStatusText(rollout);
+
+  const row = document.createElement("div");
+  row.className = "card-row";
+
+  const pill = document.createElement("span");
+  pill.className = `status-pill ${statusClass(rollout.outcome)}`;
+  pill.textContent = rollout.outcome;
+
+  const evidence = document.createElement("a");
+  evidence.href = rollout.evidence;
+  evidence.textContent = rollout.truth_level || "evidence";
+
+  row.append(pill, evidence);
+  body.append(meta, title, task, status, row);
+  card.append(video, body);
+  return card;
+};
+
+const renderSecondarySection = (secondaryData) => {
+  if (!secondaryData) return;
+
+  renderHighlightsInto("#secondary-highlights", secondaryData.visual_highlights || []);
+
+  const gallery = clear("#secondary-video-gallery");
+  const rollouts = secondaryData.visual_task_groups.flatMap((group) =>
+    group.rollouts.map((rollout) => ({
+      ...rollout,
+      groupTaskName: group.task_name,
+    })),
+  );
+  rollouts.forEach((rollout) => gallery.appendChild(renderEvidenceVideoCard(rollout)));
+
+  const tableNode = clear("#secondary-status-table");
+  const table = document.createElement("table");
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>Experiment</th>
+        <th>Suite</th>
+        <th>Status</th>
+        <th>Success</th>
+        <th>Media</th>
+        <th>Note</th>
+      </tr>
+    </thead>
+  `;
+  const tbody = document.createElement("tbody");
+  secondaryData.reproduction_rows.forEach((row) => {
+    const tr = document.createElement("tr");
+    [row.algorithm, row.suite, row.state, formatRate(row.success_rate), row.media, row.note].forEach(
+      (value, index) => {
+        const cell = document.createElement(index === 0 ? "th" : "td");
+        if (index === 0) cell.scope = "row";
+        cell.textContent = value;
+        tr.appendChild(cell);
+      },
+    );
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  tableNode.appendChild(table);
+};
+
+const render = ({ mainData, secondaryData }) => {
+  const data = mainData;
   siteData = data;
   text("#venue", data.venue);
   text("#title", data.title);
@@ -445,7 +556,7 @@ const render = (data) => {
 
   const video = document.querySelector("#teaser-video");
   video.src = data.teaser.src;
-  video.poster = data.teaser.poster;
+  if (data.teaser.poster) video.poster = data.teaser.poster;
   text("#teaser-caption", data.teaser.caption);
 
   renderParagraphs("#abstract-text", data.abstract);
@@ -463,13 +574,20 @@ const render = (data) => {
   renderList("#boundaries", data.boundaries);
   renderList("#next-actions", data.next_actions);
   renderLinkList("#references", data.references);
+  renderSecondarySection(secondaryData);
 };
 
-fetch("data/site.json")
-  .then((response) => {
+Promise.all([
+  fetch("data/site.json").then((response) => {
     if (!response.ok) throw new Error(`Unable to load site data: ${response.status}`);
     return response.json();
-  })
+  }),
+  fetch("data/libero_vla_site.json").then((response) => {
+    if (!response.ok) throw new Error(`Unable to load secondary data: ${response.status}`);
+    return response.json();
+  }),
+])
+  .then(([mainData, secondaryData]) => ({ mainData, secondaryData }))
   .then(render)
   .catch((error) => {
     const main = document.querySelector("main");

@@ -1,24 +1,28 @@
 {
   "workspace": "work4",
-  "title": "LIBERO-10 Robotic Control Reproduction",
-  "subtitle": "Real simulator videos, task-level coverage, and same-harness VLA performance from the work4 LIBERO-10 reproduction line.",
+  "title": "WEF-Bench UAV Safe Execution and AirSim Trace Replays",
+  "subtitle": "Task-level UAV control videos, AirSim local trace replays, and evidence-grounded benchmark rows for dynamic obstacle, stale command, low energy, and pose-constrained execution.",
   "authors": [
     "work4 experiment workspace",
     "xuka0000"
   ],
-  "venue": "Project page, updated 2026-06-16",
-  "updated_at": "2026-06-16 01:20 +08",
+  "venue": "Project page, updated 2026-06-22",
+  "updated_at": "2026-06-22 16:40 +08",
   "buttons": [
     {
       "label": "Videos",
       "href": "#task-gallery-section"
     },
     {
-      "label": "Performance",
+      "label": "VLA Gate",
+      "href": "#vla-sanity-section"
+    },
+    {
+      "label": "Metrics",
       "href": "#performance-section"
     },
     {
-      "label": "Reproduction",
+      "label": "Status",
       "href": "#reproduction-section"
     },
     {
@@ -28,534 +32,542 @@
     {
       "label": "GitHub",
       "href": "https://github.com/xuka0000/work4-libero-vla-reproduction"
+    },
+    {
+      "label": "GitHub Pages",
+      "href": "https://xuka0000.github.io/work4-libero-vla-reproduction/"
     }
   ],
   "teaser": {
     "type": "video",
-    "src": "media/libero_task_gallery/n264_task2_stove_moka_pot_fail.mp4",
-    "poster": "media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png",
-    "caption": "A real LIBERO-10 simulator rollout from the OpenVLA-OFT visual-capture run. The clip shows robotic-arm control behavior, not an edited success montage."
+    "src": "media/wef_bench/airsim_t2_dynamic_obstacle_ours_vehicle_observer.webm",
+    "poster": "media/wef_bench/airsim_t2_dynamic_obstacle_ours_vehicle_observer_poster.png",
+    "caption": "Local AirSim vehicle-observer replay for the T2 dynamic-obstacle task. The clip is a trace replay from an existing work4 run, not a new controller rollout metric."
   },
   "abstract": [
-    "This project page summarizes the work4 LIBERO-10 reproduction branch. It combines real robotic-arm rollout videos, task-level video coverage, and same-harness performance rows from public VLA and robot-policy candidates.",
-    "The page deliberately separates video evidence from metric evidence. The current videos are OpenVLA-OFT failure rollouts, while several other algorithms have metric rows but no recorded MP4 clips. This prevents visual evidence from being overstated.",
-    "LIBERO Spatial is retained as a runability sanity gate because strong public rows reached near-ceiling success. The main comparison shown here focuses on the harder LIBERO-10 protocol, where the same methods separate more clearly."
+    "This page packages the current work4 UAV-control evidence as a paper-style visual page. The main visual material is a set of local AirSim trace replays and WEF-Bench preview videos, organized by task rather than by training run.",
+    "The current research target is safe local execution for UAVs that receive high-level navigation or inspection intent from an upstream planner. The local executor must handle dynamic obstacles, blocked paths, stale high-level commands, low battery, and pose-constrained flight.",
+    "The evidence is deliberately separated by truth level. Synthetic trace smoke results, AirSim trace replay videos, and OpenPI action-tensor diagnostics are shown as different evidence types and are not merged into one claim."
   ],
   "method": {
     "title": "Evaluation Protocol",
     "points": [
-      "Simulator: LIBERO tabletop robotic manipulation.",
-      "Primary suite: LIBERO-10, ten tasks with ten episodes per completed main row unless otherwise noted.",
-      "Visual capture: real simulator MP4 exports from N263B and N264, captured at 20 FPS.",
-      "Policy in available videos: OpenVLA-OFT with the cached moojink/openvla-7b-oft-finetuned-libero-10 checkpoint.",
-      "Metric rows: same-harness local results, not official leaderboard submissions.",
-      "Boundary: this is simulation evidence and does not claim hardware deployment or sim-to-real validation."
+      "Benchmark: WEF-Bench-UAV-Local-Execution, a local UAV execution protocol for waypoint following, dynamic obstacles, stale commands, low energy, and attitude or viewpoint constraints.",
+      "Completed metric batch: eight task families, five generated seeds, and six deterministic controller variants, for 240 synthetic trace rows.",
+      "Local AirSim videos: three vehicle-observer T2 dynamic-obstacle replays on port 41452 for B1, B3, and Ours_SEFF_pose.",
+      "Preview videos: task-level synthetic MP4 clips for T2, T3, T4, T5, and T12, used as visual evidence of the generated traces.",
+      "VLA status: OpenPI pi0.5 has real action-tensor inference rows, but the raw robot action chunks are quarantined and not dispatchable UAV contracts.",
+      "Boundary: the page does not claim hardware deployment, RL training completion, public SOTA, or sim-to-real validation."
     ]
   },
   "technical_stack": [
-    "LIBERO simulator",
-    "VLA evaluation harness",
-    "OpenVLA-OFT",
-    "OpenPI",
-    "VLANeXt",
-    "X-VLA",
-    "DB-CogACT",
-    "StarVLA",
-    "Isaac GR00T",
-    "RTX 5090 sm_120 repair path"
+    "AirSim",
+    "Unreal Engine",
+    "Colosseum Python client",
+    "WEF-Bench",
+    "PID pose baseline",
+    "Tracking MPC",
+    "MPC-CBF",
+    "SEFF",
+    "TE-SEFF",
+    "OpenPI pi0.5 diagnostic"
   ],
   "visual_highlights": [
     {
-      "label": "Real MP4 rollouts",
-      "value": "6"
+      "label": "UAV MP4 clips on page",
+      "value": "8"
     },
     {
-      "label": "LIBERO-10 tasks with video",
-      "value": "4"
+      "label": "UAV task families with video",
+      "value": "5"
     },
     {
-      "label": "Completed LIBERO-10 main rows",
-      "value": "9"
+      "label": "Synthetic metric rows",
+      "value": "240"
     },
     {
-      "label": "Video storage",
-      "value": "< 1 MB"
+      "label": "AirSim replay videos",
+      "value": "3"
     }
   ],
   "filters": {
     "tasks": [
       "All",
-      "Task 0",
-      "Task 1",
-      "Task 2",
-      "Task 3"
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T12"
     ],
     "algorithms": [
       "All",
-      "OpenVLA-OFT",
-      "openpi pi0.5",
-      "openpi pi0",
-      "VLANeXt",
-      "X-VLA",
-      "DB-CogACT",
-      "StarVLA",
-      "Isaac GR00T"
+      "Ours_SEFF_pose",
+      "Ours_SEFF_local_continue",
+      "B1_tracking_mpc",
+      "B3_mpc_cbf",
+      "Ours_TE_SEFF_rule",
+      "OpenPI pi0.5"
     ],
     "outcomes": [
       "All",
-      "Failure",
       "Success",
+      "Failure",
+      "Diagnostic",
       "Video available",
       "Metric only"
     ]
   },
   "visual_task_groups": [
     {
-      "task_id": "Task 0",
-      "task_name": "Put both the alphabet soup and the tomato sauce in the basket.",
+      "task_id": "T2",
+      "task_name": "Dynamic-obstacle local execution. The UAV follows a local waypoint while an obstacle moves through the corridor, so the controller must preserve clearance instead of only minimizing tracking error.",
       "rollouts": [
         {
-          "title": "Task 0 episode 0",
-          "algorithm": "OpenVLA-OFT",
-          "task_id": "Task 0",
-          "task": "Put both the alphabet soup and the tomato sauce in the basket.",
-          "outcome": "Failure",
-          "status": "failure rollout",
-          "video": "media/libero_task_gallery/n264_task0_alphabet_soup_tomato_sauce_fail.mp4",
-          "poster": "media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png",
-          "frames": 221,
-          "fps": 20,
-          "evidence": "evidence/n264_task0_alphabet_soup_tomato_sauce_fail.jsonl",
-          "remote_source": "/root/shared-nvme/work4/outputs/n264_openvla_oft_libero10_task_gallery_20260615/results/episodes/put both the alphabet soup and the tomato sauce in the basket_ep0000_fail.mp4"
+          "title": "T2 AirSim replay, Ours_SEFF_pose",
+          "algorithm": "Ours_SEFF_pose",
+          "task_id": "T2",
+          "task": "Dynamic obstacle avoidance during local waypoint following.",
+          "outcome": "Diagnostic",
+          "status": "AirSim trace replay",
+          "summary": "AirSim vehicle-observer replay, 96 captured frames; replay evidence only, not a new rollout metric.",
+          "truth_level": "townlab_airsim_trace_replay_video",
+          "video": "media/wef_bench/airsim_t2_dynamic_obstacle_ours_vehicle_observer.webm",
+          "evidence": "evidence/wef_bench/airsim_t2_dynamic_obstacle_ours_vehicle_observer_summary.json"
         },
         {
-          "title": "Task 0 episode 0, N263B capture",
-          "algorithm": "OpenVLA-OFT",
-          "task_id": "Task 0",
-          "task": "Put both the alphabet soup and the tomato sauce in the basket.",
-          "outcome": "Failure",
-          "status": "failure rollout",
-          "video": "media/libero_visual_capture/n263b_openvla_oft_libero10_task0_ep0000_fail.mp4",
-          "poster": "media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png",
-          "frames": 221,
-          "fps": 20,
-          "evidence": "evidence/n263b_openvla_oft_libero10_task0_ep0000_fail.jsonl",
-          "remote_source": "/root/shared-nvme/work4/outputs/n263b_openvla_oft_libero10_visual_capture_videopatch_20260615/results/episodes/put both the alphabet soup and the tomato sauce in the basket_ep0000_fail.mp4"
+          "title": "T2 AirSim replay, B1_tracking_mpc",
+          "algorithm": "B1_tracking_mpc",
+          "task_id": "T2",
+          "task": "Dynamic obstacle avoidance during local waypoint following.",
+          "outcome": "Diagnostic",
+          "status": "AirSim trace replay",
+          "summary": "AirSim vehicle-observer replay, 52 captured frames; replay evidence only, not a new rollout metric.",
+          "truth_level": "townlab_airsim_trace_replay_video",
+          "video": "media/wef_bench/airsim_t2_dynamic_obstacle_b1_tracking_mpc_vehicle_observer.webm",
+          "evidence": "evidence/wef_bench/airsim_t2_dynamic_obstacle_b1_tracking_mpc_vehicle_observer_summary.json"
         },
         {
-          "title": "Task 0 episode 1, N263B capture",
-          "algorithm": "OpenVLA-OFT",
-          "task_id": "Task 0",
-          "task": "Put both the alphabet soup and the tomato sauce in the basket.",
-          "outcome": "Failure",
-          "status": "failure rollout",
-          "video": "media/libero_visual_capture/n263b_openvla_oft_libero10_task0_ep0001_fail.mp4",
-          "poster": "media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png",
-          "frames": 221,
-          "fps": 20,
-          "evidence": "evidence/n263b_openvla_oft_libero10_task0_ep0001_fail.jsonl",
-          "remote_source": "/root/shared-nvme/work4/outputs/n263b_openvla_oft_libero10_visual_capture_videopatch_20260615/results/episodes/put both the alphabet soup and the tomato sauce in the basket_ep0001_fail.mp4"
+          "title": "T2 AirSim replay, B3_mpc_cbf",
+          "algorithm": "B3_mpc_cbf",
+          "task_id": "T2",
+          "task": "Dynamic obstacle avoidance during local waypoint following.",
+          "outcome": "Diagnostic",
+          "status": "AirSim trace replay",
+          "summary": "AirSim vehicle-observer replay, 96 captured frames; replay evidence only, not a new rollout metric.",
+          "truth_level": "townlab_airsim_trace_replay_video",
+          "video": "media/wef_bench/airsim_t2_dynamic_obstacle_b3_mpc_cbf_vehicle_observer.webm",
+          "evidence": "evidence/wef_bench/airsim_t2_dynamic_obstacle_b3_mpc_cbf_vehicle_observer_summary.json"
+        },
+        {
+          "title": "T2 synthetic preview, Ours_SEFF_pose",
+          "algorithm": "Ours_SEFF_pose",
+          "task_id": "T2",
+          "task": "Dynamic obstacle avoidance during local waypoint following.",
+          "outcome": "Success",
+          "status": "synthetic trace preview",
+          "summary": "success=true; 165 steps; min safety margin 0.966 m; terminal SOC 0.664.",
+          "truth_level": "synthetic_trace_smoke",
+          "video": "media/wef_bench/synthetic_t2_dynamic_obstacle_ours_seff_pose.webm",
+          "evidence": "evidence/wef_bench/synthetic_t2_dynamic_obstacle_ours_seff_pose_metrics.json"
         }
       ]
     },
     {
-      "task_id": "Task 1",
-      "task_name": "Put both the cream cheese box and the butter in the basket.",
+      "task_id": "T3",
+      "task_name": "Obstacle-blockage handling. The planned local route is blocked, so the executor must stop unsafe progress and expose a repair signal rather than forcing the waypoint.",
       "rollouts": [
         {
-          "title": "Task 1 episode 0",
-          "algorithm": "OpenVLA-OFT",
-          "task_id": "Task 1",
-          "task": "Put both the cream cheese box and the butter in the basket.",
+          "title": "T3 synthetic preview, local continuation",
+          "algorithm": "Ours_SEFF_local_continue",
+          "task_id": "T3",
+          "task": "Blocked local route with hover fallback and reroute request.",
           "outcome": "Failure",
-          "status": "failure rollout",
-          "video": "media/libero_task_gallery/n264_task1_cream_cheese_butter_fail.mp4",
-          "poster": "media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png",
-          "frames": 221,
-          "fps": 20,
-          "evidence": "evidence/n264_task1_cream_cheese_butter_fail.jsonl",
-          "remote_source": "/root/shared-nvme/work4/outputs/n264_openvla_oft_libero10_task_gallery_20260615/results/episodes/put both the cream cheese box and the butter in the basket_ep0000_fail.mp4"
+          "status": "synthetic trace preview",
+          "summary": "success=false; fallback=hover; failure=DYN_OBS_BLOCKED; repair hint=wait_or_reroute_waypoint.",
+          "truth_level": "synthetic_trace_smoke",
+          "video": "media/wef_bench/synthetic_t3_obstacle_blockage_local_continue.webm",
+          "evidence": "evidence/wef_bench/synthetic_t3_obstacle_blockage_local_continue_metrics.json"
         }
       ]
     },
     {
-      "task_id": "Task 2",
-      "task_name": "Turn on the stove and put the moka pot on it.",
+      "task_id": "T4",
+      "task_name": "Low-energy execution. The UAV starts with constrained battery state, so the controller must finish or reject the local command under an energy boundary.",
       "rollouts": [
         {
-          "title": "Task 2 episode 0",
-          "algorithm": "OpenVLA-OFT",
-          "task_id": "Task 2",
-          "task": "Turn on the stove and put the moka pot on it.",
-          "outcome": "Failure",
-          "status": "failure rollout",
-          "video": "media/libero_task_gallery/n264_task2_stove_moka_pot_fail.mp4",
-          "poster": "media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png",
-          "frames": 221,
-          "fps": 20,
-          "evidence": "evidence/n264_task2_stove_moka_pot_fail.jsonl",
-          "remote_source": "/root/shared-nvme/work4/outputs/n264_openvla_oft_libero10_task_gallery_20260615/results/episodes/turn on the stove and put the moka pot on it_ep0000_fail.mp4"
+          "title": "T4 synthetic preview, low energy",
+          "algorithm": "Ours_SEFF_local_continue",
+          "task_id": "T4",
+          "task": "Low-battery local waypoint execution under terminal SOC monitoring.",
+          "outcome": "Success",
+          "status": "synthetic trace preview",
+          "summary": "success=true; 72 steps; terminal SOC 0.182; max energy rate 165 W.",
+          "truth_level": "synthetic_trace_smoke",
+          "video": "media/wef_bench/synthetic_t4_low_energy_local_continue.webm",
+          "evidence": "evidence/wef_bench/synthetic_t4_low_energy_local_continue_metrics.json"
         }
       ]
     },
     {
-      "task_id": "Task 3",
-      "task_name": "Put the black bowl in the bottom drawer of the cabinet and close it.",
+      "task_id": "T5",
+      "task_name": "Stale-command resilience. A high-level navigation command becomes delayed or stale, so the local executor must continue safely or hold instead of blindly following outdated intent.",
       "rollouts": [
         {
-          "title": "Task 3 episode 0",
-          "algorithm": "OpenVLA-OFT",
-          "task_id": "Task 3",
-          "task": "Put the black bowl in the bottom drawer of the cabinet and close it.",
-          "outcome": "Failure",
-          "status": "failure rollout",
-          "video": "media/libero_task_gallery/n264_task3_black_bowl_drawer_fail.mp4",
-          "poster": "media/libero_visual_capture/n263b_openvla_oft_libero10_poster.png",
-          "frames": 221,
-          "fps": 20,
-          "evidence": "evidence/n264_task3_black_bowl_drawer_fail.jsonl",
-          "remote_source": "/root/shared-nvme/work4/outputs/n264_openvla_oft_libero10_task_gallery_20260615/results/episodes/put the black bowl in the bottom drawer of the cabinet and close it_ep0000_fail.mp4"
+          "title": "T5 synthetic preview, stale command",
+          "algorithm": "Ours_SEFF_local_continue",
+          "task_id": "T5",
+          "task": "Local execution with stale high-level command age up to 10 steps.",
+          "outcome": "Success",
+          "status": "synthetic trace preview",
+          "summary": "success=true; 60 steps; max command age 10; 54 safety interventions.",
+          "truth_level": "synthetic_trace_smoke",
+          "video": "media/wef_bench/synthetic_t5_stale_command_local_continue.webm",
+          "evidence": "evidence/wef_bench/synthetic_t5_stale_command_local_continue_metrics.json"
+        }
+      ]
+    },
+    {
+      "task_id": "T12",
+      "task_name": "Coupled dynamic-obstacle and stale-command execution. The UAV must preserve obstacle clearance while the upstream command is delayed.",
+      "rollouts": [
+        {
+          "title": "T12 synthetic preview, dynamic obstacle plus stale command",
+          "algorithm": "Ours_SEFF_local_continue",
+          "task_id": "T12",
+          "task": "Dynamic obstacle avoidance with stale high-level command tolerance.",
+          "outcome": "Success",
+          "status": "synthetic trace preview",
+          "summary": "success=true; 167 steps; min safety margin 0.991 m; max command age 10.",
+          "truth_level": "synthetic_trace_smoke",
+          "video": "media/wef_bench/synthetic_t12_dynamic_obstacle_stale_command_local_continue.webm",
+          "evidence": "evidence/wef_bench/synthetic_t12_dynamic_obstacle_stale_command_local_continue_metrics.json"
         }
       ]
     }
   ],
   "video_coverage_matrix": {
     "algorithms": [
-      "OpenVLA-OFT",
-      "openpi pi0.5",
-      "VLANeXt",
-      "X-VLA",
-      "DB-CogACT",
-      "StarVLA",
-      "Isaac GR00T"
+      "Ours_SEFF_pose",
+      "Ours_SEFF_local_continue",
+      "Ours_TE_SEFF_rule",
+      "B1_tracking_mpc",
+      "B3_mpc_cbf",
+      "OpenPI pi0.5"
     ],
     "rows": [
       {
-        "task": "Basket, soup and sauce",
+        "task_id": "T2",
+        "task": "Dynamic obstacle",
+        "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json",
         "coverage": {
-          "OpenVLA-OFT": "video failure",
-          "openpi pi0.5": "metric only",
-          "VLANeXt": "metric only",
-          "X-VLA": "metric only",
-          "DB-CogACT": "metric only",
-          "StarVLA": "metric only",
-          "Isaac GR00T": "metric only"
+          "Ours_SEFF_pose": "AirSim replay + synthetic video",
+          "Ours_SEFF_local_continue": "metric only",
+          "Ours_TE_SEFF_rule": "metric only",
+          "B1_tracking_mpc": "AirSim replay + metric",
+          "B3_mpc_cbf": "AirSim replay + metric",
+          "OpenPI pi0.5": "diagnostic only"
         }
       },
       {
-        "task": "Basket, cream cheese and butter",
+        "task_id": "T3",
+        "task": "Obstacle blockage",
+        "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json",
         "coverage": {
-          "OpenVLA-OFT": "video failure",
-          "openpi pi0.5": "metric only",
-          "VLANeXt": "metric only",
-          "X-VLA": "metric only",
-          "DB-CogACT": "metric only",
-          "StarVLA": "metric only",
-          "Isaac GR00T": "metric only"
+          "Ours_SEFF_pose": "metric only",
+          "Ours_SEFF_local_continue": "synthetic video",
+          "Ours_TE_SEFF_rule": "metric only",
+          "B1_tracking_mpc": "metric only",
+          "B3_mpc_cbf": "metric only",
+          "OpenPI pi0.5": "diagnostic only"
         }
       },
       {
-        "task": "Stove and moka pot",
+        "task_id": "T4",
+        "task": "Low energy",
+        "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json",
         "coverage": {
-          "OpenVLA-OFT": "video failure",
-          "openpi pi0.5": "metric only",
-          "VLANeXt": "metric only",
-          "X-VLA": "metric only",
-          "DB-CogACT": "metric only",
-          "StarVLA": "metric only",
-          "Isaac GR00T": "metric only"
+          "Ours_SEFF_pose": "metric only",
+          "Ours_SEFF_local_continue": "synthetic video",
+          "Ours_TE_SEFF_rule": "metric only",
+          "B1_tracking_mpc": "metric only",
+          "B3_mpc_cbf": "metric only",
+          "OpenPI pi0.5": "diagnostic only"
         }
       },
       {
-        "task": "Bottom drawer and black bowl",
+        "task_id": "T5",
+        "task": "Stale command",
+        "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json",
         "coverage": {
-          "OpenVLA-OFT": "video failure",
-          "openpi pi0.5": "metric only",
-          "VLANeXt": "metric only",
-          "X-VLA": "metric only",
-          "DB-CogACT": "metric only",
-          "StarVLA": "metric only",
-          "Isaac GR00T": "metric only"
+          "Ours_SEFF_pose": "metric only",
+          "Ours_SEFF_local_continue": "synthetic video",
+          "Ours_TE_SEFF_rule": "metric only",
+          "B1_tracking_mpc": "metric only",
+          "B3_mpc_cbf": "metric only",
+          "OpenPI pi0.5": "diagnostic only"
+        }
+      },
+      {
+        "task_id": "T12",
+        "task": "Dynamic obstacle plus stale command",
+        "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json",
+        "coverage": {
+          "Ours_SEFF_pose": "metric only",
+          "Ours_SEFF_local_continue": "synthetic video",
+          "Ours_TE_SEFF_rule": "metric only",
+          "B1_tracking_mpc": "metric only",
+          "B3_mpc_cbf": "metric only",
+          "OpenPI pi0.5": "diagnostic only"
         }
       }
     ]
   },
   "performance_comparison": [
     {
-      "algorithm": "VLANeXt N260E",
-      "family": "VLANeXt",
-      "suite": "LIBERO-10",
-      "protocol": "10 tasks x 10 episodes",
-      "success_rate": 0.26,
-      "successes": 26,
-      "episodes": 100,
+      "algorithm": "Ours_TE_SEFF_rule",
+      "family": "Ours_TE_SEFF_rule",
+      "suite": "WEF-Bench synthetic",
+      "protocol": "8 tasks x 5 generated seeds",
+      "success_rate": 0.75,
+      "successes": 30,
+      "episodes": 40,
       "state": "completed",
-      "truth_level": "local_same_harness_libero10_no_sota",
-      "evidence": "evidence/public_baseline_queue_status_20260612.md"
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json"
     },
     {
-      "algorithm": "OpenVLA-OFT N252B",
-      "family": "OpenVLA-OFT",
-      "suite": "LIBERO-10",
-      "protocol": "10 tasks x 10 episodes",
-      "success_rate": 0.24,
-      "successes": 24,
-      "episodes": 100,
+      "algorithm": "Ours_SEFF_local_continue",
+      "family": "Ours_SEFF_local_continue",
+      "suite": "WEF-Bench synthetic",
+      "protocol": "8 tasks x 5 generated seeds",
+      "success_rate": 0.625,
+      "successes": 25,
+      "episodes": 40,
       "state": "completed",
-      "truth_level": "local_same_harness_libero10_no_sota",
-      "evidence": "evidence/public_baseline_queue_status_20260612.md"
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json"
     },
     {
-      "algorithm": "openpi pi0.5 N251",
-      "family": "openpi pi0.5",
-      "suite": "LIBERO-10",
-      "protocol": "10 tasks x 10 episodes",
-      "success_rate": 0.21,
-      "successes": 21,
-      "episodes": 100,
+      "algorithm": "B3_mpc_cbf",
+      "family": "B3_mpc_cbf",
+      "suite": "WEF-Bench synthetic",
+      "protocol": "8 tasks x 5 generated seeds",
+      "success_rate": 0.375,
+      "successes": 15,
+      "episodes": 40,
       "state": "completed",
-      "truth_level": "local_same_harness_libero10_no_sota",
-      "evidence": "evidence/public_baseline_queue_status_20260612.md"
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json"
     },
     {
-      "algorithm": "X-VLA N259C",
-      "family": "X-VLA",
-      "suite": "LIBERO-10",
-      "protocol": "10 tasks x 10 episodes",
-      "success_rate": 0.21,
-      "successes": 21,
-      "episodes": 100,
+      "algorithm": "Ours_SEFF_pose",
+      "family": "Ours_SEFF_pose",
+      "suite": "WEF-Bench synthetic",
+      "protocol": "8 tasks x 5 generated seeds",
+      "success_rate": 0.375,
+      "successes": 15,
+      "episodes": 40,
       "state": "completed",
-      "truth_level": "local_same_harness_libero10_no_sota",
-      "evidence": "evidence/public_baseline_queue_status_20260612.md"
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json"
     },
     {
-      "algorithm": "DB-CogACT N258D",
-      "family": "DB-CogACT",
-      "suite": "LIBERO-10",
-      "protocol": "10 tasks x 10 episodes",
-      "success_rate": 0.13,
-      "successes": 13,
-      "episodes": 100,
+      "algorithm": "B1_tracking_mpc",
+      "family": "B1_tracking_mpc",
+      "suite": "WEF-Bench synthetic",
+      "protocol": "8 tasks x 5 generated seeds",
+      "success_rate": 0.35,
+      "successes": 14,
+      "episodes": 40,
       "state": "completed",
-      "truth_level": "local_same_harness_libero10_no_sota",
-      "evidence": "evidence/public_baseline_queue_status_20260612.md"
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json"
     },
     {
-      "algorithm": "StarVLA Qwen2.5 OFT N261E",
-      "family": "StarVLA",
-      "suite": "LIBERO-10",
-      "protocol": "10 tasks x 10 episodes",
-      "success_rate": 0.04,
-      "successes": 4,
-      "episodes": 100,
+      "algorithm": "B0_pid_pose",
+      "family": "B0_pid_pose",
+      "suite": "WEF-Bench synthetic",
+      "protocol": "8 tasks x 5 generated seeds",
+      "success_rate": 0.3,
+      "successes": 12,
+      "episodes": 40,
       "state": "completed",
-      "truth_level": "local_same_harness_libero10_no_sota",
-      "evidence": "evidence/public_baseline_queue_status_20260612.md"
-    },
-    {
-      "algorithm": "StarVLA Qwen2.5 FAST N262D",
-      "family": "StarVLA",
-      "suite": "LIBERO-10",
-      "protocol": "10 tasks x 10 episodes",
-      "success_rate": 0.02,
-      "successes": 2,
-      "episodes": 100,
-      "state": "completed",
-      "truth_level": "local_same_harness_libero10_no_sota",
-      "evidence": "evidence/public_baseline_queue_status_20260612.md"
-    },
-    {
-      "algorithm": "openpi pi0 base N254W",
-      "family": "openpi pi0",
-      "suite": "LIBERO-10",
-      "protocol": "10 tasks x 10 episodes",
-      "success_rate": 0.01,
-      "successes": 1,
-      "episodes": 100,
-      "state": "completed",
-      "truth_level": "local_same_harness_libero10_no_sota",
-      "evidence": "evidence/public_baseline_queue_status_20260612.md"
-    },
-    {
-      "algorithm": "Isaac GR00T N1.6 N257",
-      "family": "Isaac GR00T",
-      "suite": "LIBERO-10",
-      "protocol": "10 tasks x 10 episodes",
-      "success_rate": 0.0,
-      "successes": 0,
-      "episodes": 100,
-      "state": "completed",
-      "truth_level": "local_same_harness_libero10_no_sota",
-      "evidence": "evidence/public_baseline_queue_status_20260612.md"
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json"
     }
   ],
   "reproduction_rows": [
     {
-      "algorithm": "OpenVLA-OFT N248",
-      "suite": "LIBERO Spatial",
-      "state": "completed spatial sanity gate",
-      "success_rate": 0.99,
-      "media": "metric only",
-      "note": "Near-ceiling result, retained as runability evidence."
+      "algorithm": "WEF main synthetic matrix",
+      "suite": "WEF-Bench synthetic",
+      "state": "completed metric matrix",
+      "success_rate": null,
+      "media": "summary table",
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.csv",
+      "note": "240 rows over eight task families, five generated seeds, and six deterministic controller variants."
     },
     {
-      "algorithm": "openpi pi0.5 N250",
-      "suite": "LIBERO Spatial",
-      "state": "completed spatial sanity gate",
-      "success_rate": 0.98,
-      "media": "metric only",
-      "note": "Near-ceiling result, one reason Spatial is not the main ranking protocol."
+      "algorithm": "AirSim T2 vehicle-observer batch",
+      "suite": "AirSim trace replay",
+      "state": "completed video export",
+      "success_rate": null,
+      "media": "three MP4 replays",
+      "truth_level": "townlab_airsim_trace_replay_video",
+      "evidence": "evidence/wef_bench/airsim_t2_dynamic_obstacle_vehicle_observer_batch_summary.json",
+      "note": "B1, B3, and Ours_SEFF_pose videos were exported from local AirSim replay on port 41452."
     },
     {
-      "algorithm": "VLANeXt N260E",
-      "suite": "LIBERO-10",
-      "state": "completed main row",
-      "success_rate": 0.26,
-      "media": "metric only",
-      "note": "Highest completed local LIBERO-10 row in the current table."
+      "algorithm": "Ours_SEFF_pose",
+      "suite": "T2 dynamic obstacle",
+      "state": "video and metric available",
+      "success_rate": 1.0,
+      "media": "AirSim replay plus synthetic preview",
+      "truth_level": "synthetic_trace_smoke plus townlab_airsim_trace_replay_video",
+      "evidence": "evidence/wef_bench/synthetic_t2_dynamic_obstacle_ours_seff_pose_metrics.json",
+      "note": "T2 synthetic sample succeeded; the AirSim video is replay evidence."
     },
     {
-      "algorithm": "OpenVLA-OFT N252B",
-      "suite": "LIBERO-10",
-      "state": "completed main row plus visual capture",
-      "success_rate": 0.24,
-      "media": "six failure videos available from N263B/N264",
-      "note": "Only algorithm with local MP4 visual evidence so far."
-    },
-    {
-      "algorithm": "openpi pi0.5 N251",
-      "suite": "LIBERO-10",
-      "state": "completed main row",
-      "success_rate": 0.21,
-      "media": "metric only",
-      "note": "Preserved harder-suite anchor."
-    },
-    {
-      "algorithm": "X-VLA N259C",
-      "suite": "LIBERO-10",
-      "state": "completed main row after protobuf repair",
-      "success_rate": 0.21,
-      "media": "metric only",
-      "note": "No local video recorded."
-    },
-    {
-      "algorithm": "DB-CogACT N258D",
-      "suite": "LIBERO-10",
-      "state": "completed main row after uv and cache repair",
-      "success_rate": 0.13,
-      "media": "metric only",
-      "note": "No local video recorded."
-    },
-    {
-      "algorithm": "StarVLA Qwen2.5 OFT N261E",
-      "suite": "LIBERO-10",
-      "state": "completed main row after clean-GL and sm120 repair",
-      "success_rate": 0.04,
-      "media": "metric only",
-      "note": "No local video recorded."
-    },
-    {
-      "algorithm": "StarVLA Qwen2.5 FAST N262D",
-      "suite": "LIBERO-10",
-      "state": "completed main row after weight prefetch",
-      "success_rate": 0.02,
-      "media": "metric only",
-      "note": "No local video recorded."
-    },
-    {
-      "algorithm": "openpi pi0 base N254W",
-      "suite": "LIBERO-10",
-      "state": "completed main row",
-      "success_rate": 0.01,
-      "media": "metric only",
-      "note": "Custom pi0_libero config; no local video recorded."
-    },
-    {
-      "algorithm": "Isaac GR00T N1.6 N257",
-      "suite": "LIBERO-10",
-      "state": "completed main row after sm120 repair",
+      "algorithm": "Ours_SEFF_local_continue",
+      "suite": "T3 obstacle blockage",
+      "state": "failure feedback video available",
       "success_rate": 0.0,
-      "media": "metric only",
-      "note": "Completed without error episodes but had 0/100 successes."
+      "media": "synthetic preview",
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/synthetic_t3_obstacle_blockage_local_continue_metrics.json",
+      "note": "The sample triggers hover fallback and returns wait_or_reroute_waypoint."
     },
     {
-      "algorithm": "MME-VLA pi0.5 N244B",
-      "suite": "LIBERO",
-      "state": "blocked before health",
-      "success_rate": null,
-      "media": "not recorded",
-      "note": "cv2 and libGL runtime conflict; no metric row."
+      "algorithm": "Ours_SEFF_local_continue",
+      "suite": "T4 low energy",
+      "state": "video and metric available",
+      "success_rate": 1.0,
+      "media": "synthetic preview",
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/synthetic_t4_low_energy_local_continue_metrics.json",
+      "note": "The shown sample succeeds with low terminal SOC."
     },
     {
-      "algorithm": "CogACT Base",
-      "suite": "LIBERO",
-      "state": "blocked before health",
+      "algorithm": "Ours_SEFF_local_continue",
+      "suite": "T5 stale command",
+      "state": "video and metric available",
+      "success_rate": 1.0,
+      "media": "synthetic preview",
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/synthetic_t5_stale_command_local_continue_metrics.json",
+      "note": "The shown sample tolerates high-level command age up to ten steps."
+    },
+    {
+      "algorithm": "Ours_SEFF_local_continue",
+      "suite": "T12 dynamic obstacle plus stale command",
+      "state": "video and metric available",
+      "success_rate": 1.0,
+      "media": "synthetic preview",
+      "truth_level": "synthetic_trace_smoke",
+      "evidence": "evidence/wef_bench/synthetic_t12_dynamic_obstacle_stale_command_local_continue_metrics.json",
+      "note": "The shown sample succeeds with obstacle clearance and delayed-command tolerance."
+    },
+    {
+      "algorithm": "OpenPI pi0.5",
+      "suite": "WEF action-tensor probe",
+      "state": "diagnostic only, quarantined",
+      "success_rate": null,
+      "media": "no video",
+      "truth_level": "openpi_wef_state_prompt_action_tensor_probe_surrogate_image_no_rollout",
+      "evidence": "evidence/wef_bench/openpi_wef_action_tensor_probe_remote_real_summary.json",
+      "note": "Eight real model inference rows exist, but robot action chunks are not dispatchable UAV contracts."
+    },
+    {
+      "algorithm": "B5 to B9 RL baselines",
+      "suite": "WEF-Bench",
+      "state": "blocked by training evidence gate",
       "success_rate": null,
       "media": "not recorded",
-      "note": "Git dependency fetch failure; no metric row."
+      "truth_level": "protocol_manifest",
+      "evidence": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json",
+      "note": "IPPO, MAPPO, graph MAPPO, SAC, and TD3 rows remain incomplete until training logs, curves, checkpoints, and rollout evaluations exist."
+    },
+    {
+      "algorithm": "Ours_TE_SEFF_vla_executor",
+      "suite": "WEF-Bench",
+      "state": "blocked until VLA adapter and executor evidence exist",
+      "success_rate": null,
+      "media": "not recorded",
+      "truth_level": "protocol_manifest",
+      "evidence": "evidence/wef_bench/openpi_wef_action_tensor_probe_remote_real_summary.json",
+      "note": "This is the intended VLA execution route, but it is not yet a closed-loop rollout."
+    },
+    {
+      "algorithm": "OpenVLA-OFT and public LIBERO rows",
+      "suite": "LIBERO-10",
+      "state": "archived early reproduction evidence",
+      "success_rate": 0.24,
+      "media": "LIBERO videos retained separately",
+      "truth_level": "local_same_harness_libero10_no_sota",
+      "evidence": "evidence/public_baseline_queue_status_20260612.md",
+      "note": "Retained as early VLA reproduction context, no longer the main work4 page focus."
     }
   ],
   "evidence_files": [
     {
-      "label": "N264 task-gallery manifest",
-      "href": "evidence/n264_openvla_oft_libero10_task_gallery_manifest.json"
+      "label": "WEF main 5-seed synthetic summary JSON",
+      "href": "evidence/wef_bench/wef_main_5seed_synthetic_summary.json"
     },
     {
-      "label": "N264 task-gallery aggregate",
-      "href": "evidence/n264_openvla_oft_libero10_task_gallery_aggregate.json"
+      "label": "WEF main 5-seed synthetic summary CSV",
+      "href": "evidence/wef_bench/wef_main_5seed_synthetic_summary.csv"
     },
     {
-      "label": "N263B visual-capture manifest",
-      "href": "evidence/n263b_openvla_oft_libero10_visual_capture_manifest.json"
+      "label": "AirSim T2 vehicle-observer batch summary",
+      "href": "evidence/wef_bench/airsim_t2_dynamic_obstacle_vehicle_observer_batch_summary.json"
     },
     {
-      "label": "N263B aggregate for recorded episodes",
-      "href": "evidence/n263b_openvla_oft_libero10_visual_capture_aggregate.json"
+      "label": "AirSim T2 Ours replay summary",
+      "href": "evidence/wef_bench/airsim_t2_dynamic_obstacle_ours_vehicle_observer_summary.json"
     },
     {
-      "label": "Full public-baseline evidence snapshot",
+      "label": "OpenPI WEF action tensor probe summary",
+      "href": "evidence/wef_bench/openpi_wef_action_tensor_probe_remote_real_summary.json"
+    },
+    {
+      "label": "Earlier public baseline snapshot",
       "href": "evidence/public_baseline_queue_status_20260612.md"
-    },
-    {
-      "label": "Video-recorder compatibility patch log",
-      "href": "evidence/n264_video_recorder_compat.txt"
     }
   ],
   "timeline": [
     {
-      "time": "2026-06-12",
-      "event": "OpenVLA-OFT and openpi pi0.5 reached near-ceiling LIBERO Spatial rows, turning Spatial into a runability sanity gate."
+      "time": "2026-06-17",
+      "event": "Generated WEF-Bench synthetic preview videos for dynamic obstacles, blockage, low energy, stale command, and combined dynamic-stale tasks."
     },
     {
-      "time": "2026-06-13",
-      "event": "The active route pivoted to LIBERO-10, where OpenVLA-OFT, openpi pi0.5, and openpi pi0 separated clearly."
+      "time": "2026-06-18",
+      "event": "Exported local AirSim T2 vehicle-observer trace replays for B1, B3, and Ours_SEFF_pose on port 41452."
     },
     {
-      "time": "2026-06-15",
-      "event": "DB-CogACT, X-VLA, VLANeXt, StarVLA, and GR00T rows were repaired or completed under the local LIBERO-10 harness."
+      "time": "2026-06-19",
+      "event": "Completed the 240-row synthetic method matrix over eight task families, five generated seeds, and six deterministic controller variants."
     },
     {
-      "time": "2026-06-15",
-      "event": "N263B and N264 exported six real OpenVLA-OFT LIBERO-10 MP4 rollout clips across four tasks."
+      "time": "2026-06-21",
+      "event": "Completed the OpenPI pi0.5 WEF action-tensor probe and quarantined the output because robot action chunks are not UAV control contracts."
     },
     {
-      "time": "2026-06-16",
-      "event": "The page was reorganized around task videos, algorithm status, and claim boundaries."
+      "time": "2026-06-22",
+      "event": "Rebuilt the project page around UAV task videos and local AirSim evidence."
     }
   ],
   "boundaries": [
-    "All video clips are real simulator rollouts, not generated media.",
-    "All current videos are OpenVLA-OFT failure rollouts. Success videos are not currently available.",
-    "Metric-only rows should not be read as visual demonstrations.",
-    "The performance table reports local same-harness LIBERO-10 results, not official leaderboard scores.",
-    "This page does not claim public SOTA, hardware execution, UAV deployment, or sim-to-real transfer."
+    "Synthetic trace smoke rows are not full AirSim experiments and not hardware validation.",
+    "AirSim videos on this page are trace replays from local runs, not new controller rollout metrics.",
+    "OpenPI pi0.5 evidence is a model-inference diagnostic with no WEF camera image and no closed-loop UAV rollout.",
+    "RL baselines are not complete until training logs, learning curves, policy checkpoints, rollout evaluations, baselines, ablations, seeds, and source result files exist.",
+    "The page does not claim public SOTA, sim-to-real transfer, or physical UAV deployment."
   ],
   "next_actions": [
-    "Rebuild the sm120-compatible runtime on the new server before recording more videos.",
-    "Capture success and failure clips for more algorithms when a working runtime is available.",
-    "Keep task and algorithm filters stable so new MP4 clips can be added without redesigning the page.",
-    "Use this page as visual evidence packaging, while keeping formal paper claims tied to source aggregates."
+    "Record full AirSim videos for T3, T4, T5, T8, T9, T10, and T12 after the editable UE scene is stable.",
+    "Implement a UAV semantic adapter before any VLA proposal is allowed to drive a rollout.",
+    "Add RL baseline rows only after training artifacts and rollout evaluations exist.",
+    "Keep task videos and metric tables separated so visual evidence does not overstate experiment claims."
   ],
   "references": [
     {

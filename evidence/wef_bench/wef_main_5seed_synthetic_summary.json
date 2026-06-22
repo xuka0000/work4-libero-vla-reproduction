@@ -1,0 +1,188 @@
+{
+  "truth_level": "synthetic_trace_smoke",
+  "seed_scope": "generated_multiseed_scenarios",
+  "tasks": [
+    "T2_dynamic_obstacle",
+    "T3_obstacle_blockage",
+    "T4_low_energy",
+    "T5_stale_command",
+    "T8_pose_waypoint",
+    "T9_tilted_inspection",
+    "T10_large_attitude_recovery",
+    "T12_dynamic_obstacle_stale_command"
+  ],
+  "methods": [
+    "B0_pid_pose",
+    "B1_tracking_mpc",
+    "B3_mpc_cbf",
+    "Ours_SEFF_pose",
+    "Ours_SEFF_local_continue",
+    "Ours_TE_SEFF_rule"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "row_count": 240,
+  "summary_csv": "benchmark_swarm_rl\\outputs\\wef_main_6method_5seed_synthetic_matrix_20260619\\wef_main_5seed_synthetic_summary.csv",
+  "method_summary": [
+    {
+      "method_id": "B0_pid_pose",
+      "rows": 40,
+      "success_count": 12,
+      "success_rate": 0.3,
+      "failure_codes": [
+        "DYN_FEASIBILITY_VIOLATION",
+        "DYN_OBS_BLOCKED",
+        "ENERGY_INSUFFICIENT",
+        "NONE",
+        "STALE_COMMAND"
+      ]
+    },
+    {
+      "method_id": "B1_tracking_mpc",
+      "rows": 40,
+      "success_count": 14,
+      "success_rate": 0.35,
+      "failure_codes": [
+        "DYN_FEASIBILITY_VIOLATION",
+        "DYN_OBS_BLOCKED",
+        "ENERGY_INSUFFICIENT",
+        "NONE",
+        "STALE_COMMAND"
+      ]
+    },
+    {
+      "method_id": "B3_mpc_cbf",
+      "rows": 40,
+      "success_count": 15,
+      "success_rate": 0.375,
+      "failure_codes": [
+        "DYN_FEASIBILITY_VIOLATION",
+        "ENERGY_INSUFFICIENT",
+        "NONE",
+        "STALE_COMMAND"
+      ]
+    },
+    {
+      "method_id": "Ours_SEFF_local_continue",
+      "rows": 40,
+      "success_count": 25,
+      "success_rate": 0.625,
+      "failure_codes": [
+        "DYN_FEASIBILITY_VIOLATION",
+        "DYN_OBS_BLOCKED",
+        "ENERGY_INSUFFICIENT",
+        "NONE"
+      ]
+    },
+    {
+      "method_id": "Ours_SEFF_pose",
+      "rows": 40,
+      "success_count": 15,
+      "success_rate": 0.375,
+      "failure_codes": [
+        "DYN_FEASIBILITY_VIOLATION",
+        "DYN_OBS_BLOCKED",
+        "ENERGY_INSUFFICIENT",
+        "NONE",
+        "STALE_COMMAND"
+      ]
+    },
+    {
+      "method_id": "Ours_TE_SEFF_rule",
+      "rows": 40,
+      "success_count": 30,
+      "success_rate": 0.75,
+      "failure_codes": [
+        "DYN_OBS_BLOCKED",
+        "ENERGY_INSUFFICIENT",
+        "NONE"
+      ]
+    }
+  ],
+  "task_summary": [
+    {
+      "task_id": "T10_large_attitude_recovery",
+      "rows": 30,
+      "success_count": 30,
+      "success_rate": 1.0,
+      "failure_codes": [
+        "NONE"
+      ]
+    },
+    {
+      "task_id": "T12_dynamic_obstacle_stale_command",
+      "rows": 30,
+      "success_count": 10,
+      "success_rate": 0.3333333333333333,
+      "failure_codes": [
+        "NONE",
+        "STALE_COMMAND"
+      ]
+    },
+    {
+      "task_id": "T2_dynamic_obstacle",
+      "rows": 30,
+      "success_count": 25,
+      "success_rate": 0.8333333333333334,
+      "failure_codes": [
+        "DYN_FEASIBILITY_VIOLATION",
+        "NONE"
+      ]
+    },
+    {
+      "task_id": "T3_obstacle_blockage",
+      "rows": 30,
+      "success_count": 1,
+      "success_rate": 0.03333333333333333,
+      "failure_codes": [
+        "DYN_FEASIBILITY_VIOLATION",
+        "DYN_OBS_BLOCKED",
+        "NONE"
+      ]
+    },
+    {
+      "task_id": "T4_low_energy",
+      "rows": 30,
+      "success_count": 0,
+      "success_rate": 0.0,
+      "failure_codes": [
+        "ENERGY_INSUFFICIENT"
+      ]
+    },
+    {
+      "task_id": "T5_stale_command",
+      "rows": 30,
+      "success_count": 10,
+      "success_rate": 0.3333333333333333,
+      "failure_codes": [
+        "NONE",
+        "STALE_COMMAND"
+      ]
+    },
+    {
+      "task_id": "T8_pose_waypoint",
+      "rows": 30,
+      "success_count": 30,
+      "success_rate": 1.0,
+      "failure_codes": [
+        "NONE"
+      ]
+    },
+    {
+      "task_id": "T9_tilted_inspection",
+      "rows": 30,
+      "success_count": 5,
+      "success_rate": 0.16666666666666666,
+      "failure_codes": [
+        "DYN_FEASIBILITY_VIOLATION",
+        "NONE"
+      ]
+    }
+  ],
+  "boundary": "This batch runs deterministic WEF-Bench synthetic multiseed scenario variants. The generated seeds are random-style scenario instances, not public dataset tasks. It is not AirSim evidence, not RL training, not 7B VLA training, not hardware validation, and not sim-to-real evidence."
+}

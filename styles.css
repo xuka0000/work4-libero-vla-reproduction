@@ -54,8 +54,8 @@ a:hover {
 }
 
 .hero {
-  min-height: 92vh;
-  padding: 56px 0 72px;
+  min-height: auto;
+  padding: 52px 0 58px;
   background: var(--paper);
   display: flex;
   align-items: center;
@@ -93,6 +93,7 @@ h1 {
   font-size: 64px;
   font-weight: 750;
   line-height: 1.03;
+  overflow-wrap: anywhere;
 }
 
 h2 {
@@ -144,7 +145,7 @@ h3 {
 }
 
 .hero-teaser {
-  width: min(780px, 100%);
+  width: min(760px, 100%);
   margin: 0 auto;
   background: #000;
   border-radius: 28px;
@@ -158,6 +159,10 @@ video {
   aspect-ratio: 1 / 1;
   object-fit: contain;
   background: #000;
+}
+
+.hero-teaser video {
+  aspect-ratio: 16 / 9;
 }
 
 figcaption {
@@ -298,6 +303,23 @@ p {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+}
+
+.uav-video-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.uav-video-grid video {
+  aspect-ratio: 16 / 9;
+}
+
+.compact-highlights {
+  margin-bottom: 8px;
+}
+
+.uav-status-table {
+  margin-top: 22px;
 }
 
 .algorithm-overview {
@@ -597,7 +619,8 @@ footer .shell {
   }
 
   h1 {
-    font-size: 34px;
+    max-width: 300px;
+    font-size: 26px;
     line-height: 1.08;
   }
 
@@ -606,12 +629,15 @@ footer .shell {
   }
 
   .subtitle {
+    max-width: 300px;
     font-size: 18px;
   }
 
   .button-row {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    max-width: 300px;
+    margin: 0 auto;
   }
 
   .button-row a {
@@ -626,6 +652,10 @@ footer .shell {
   .video-card,
   .table-wrap {
     border-radius: 18px;
+  }
+
+  .hero-teaser {
+    width: min(100%, 300px);
   }
 
   .highlight-grid,
